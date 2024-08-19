@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor } from '../access/checks'
-import { Episode } from '../payload-types'
+import { Episode } from '@/payload-types'
 import publishEpisode from '../endpoints/publishEpisode'
 
 export const Episodes: CollectionConfig = {
