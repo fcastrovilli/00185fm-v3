@@ -18,7 +18,6 @@ import {
   Audio,
   Episodes,
   Images,
-  Fonts,
   Playlists,
   Shows,
   Tags,
@@ -43,7 +42,7 @@ export default buildConfig({
   onInit: async (payload) => {
     await createDefaultPlaylist(payload)
   },
-  collections: [Users, Artists, Audio, Episodes, Images, Fonts, Playlists, Shows, Tags],
+  collections: [Users, Artists, Audio, Episodes, Images, Playlists, Shows, Tags],
   globals: [NowPlaying, Schedule],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -64,10 +63,6 @@ export default buildConfig({
         [Images.slug]: {
           disableLocalStorage: true,
           prefix: 'images',
-        },
-        [Fonts.slug]: {
-          disableLocalStorage: true,
-          prefix: 'fonts',
         },
       },
       disableLocalStorage: true,

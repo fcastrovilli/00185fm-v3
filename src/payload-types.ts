@@ -16,7 +16,6 @@ export interface Config {
     audio: Audio;
     episodes: Episode;
     images: Image;
-    fonts: Font;
     playlists: Playlist;
     shows: Show;
     tags: Tag;
@@ -231,24 +230,6 @@ export interface Tag {
   name: string;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "fonts".
- */
-export interface Font {
-  id: string;
-  name: string;
-  prefix?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
