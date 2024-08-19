@@ -2,6 +2,8 @@ import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor } from '../access/checks'
 import { Episode } from '@/payload-types'
 import publishEpisode from '../endpoints/publishEpisode'
+import { generatePreviewPath } from '../utils/generatePreviewPath'
+import { slugField } from '../fields/slugField'
 
 export const Episodes: CollectionConfig = {
   slug: 'episodes',
@@ -14,6 +16,16 @@ export const Episodes: CollectionConfig = {
   admin: {
     description: 'Manage all the episodes.',
     useAsTitle: 'title',
+    livePreview: {
+      url: ({ data }) => {
+        const path = generatePreviewPath({
+          path: `/archive/${typeof data?.slug === 'string' ? data.slug : ''}`,
+        })
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
+      },
+    },
+    preview: (doc) =>
+      generatePreviewPath({ path: `/archive/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
   },
   endpoints: [
     {
@@ -161,5 +173,6 @@ export const Episodes: CollectionConfig = {
         position: 'sidebar',
       },
     },
+    slugField(),
   ],
 }

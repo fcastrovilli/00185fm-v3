@@ -92,6 +92,7 @@ export interface Artist {
     };
     [k: string]: unknown;
   } | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -143,6 +144,7 @@ export interface Episode {
   defaultPlaylist?: boolean | null;
   playlists?: (number | Playlist)[] | null;
   tags?: (string | Tag)[] | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -170,6 +172,7 @@ export interface Show {
     [k: string]: unknown;
   } | null;
   image?: string | Image | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
