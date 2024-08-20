@@ -6,8 +6,9 @@ export default function Nav() {
       <div className="text-3xl font-semibold">
         <Link href={'/'}>00185fm</Link>
       </div>
-      <div>
+      <div className="flex gap-4">
         <Link href={'/archive'}>Archive</Link>
+        <Link href={'/shows'}>Shows</Link>
       </div>
     </nav>
   )
