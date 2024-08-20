@@ -16,6 +16,11 @@ export default async function Archive() {
     overrideAccess: true,
     depth: 1,
     limit: 12,
+    where: {
+      public: {
+        equals: true,
+      },
+    },
   })
   return (
     <div className="p-4">
