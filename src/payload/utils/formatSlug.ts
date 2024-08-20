@@ -10,7 +10,11 @@ const formatSlug =
   (fallback: string): FieldHook =>
   ({ data, originalDoc, value }) => {
     if (typeof value === 'string' && value.length > 0) {
-      return format(value)
+      if (data?.[fallback] !== originalDoc?.[fallback] && value === originalDoc?.slug) {
+        return format(data?.[fallback])
+      } else {
+        return format(value)
+      }
     } else {
       const fallbackData = data?.[fallback] || originalDoc?.[fallback]
 
