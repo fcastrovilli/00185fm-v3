@@ -8,8 +8,7 @@ export default function Nav() {
       </div>
       <div className="flex gap-4">
         <Link href={'/archive'}>Archive</Link>
-        <Link href={'/shows'}>Shows</Link>
-        <Link href={'/artists'}>Artists</Link>
+        <Link href={'/about'}>About</Link>
       </div>
     </nav>
   )

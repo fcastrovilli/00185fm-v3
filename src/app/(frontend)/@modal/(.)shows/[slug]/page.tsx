@@ -3,6 +3,7 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { cache } from 'react'
 import { Show, Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
+import { Modal } from '@/app/components/Modal'
 
 type Props = {
   params: {
@@ -14,7 +15,7 @@ export default async function ShowPage({ params }: Props) {
   const show: Show = await queryShowBySlug({ slug: params.slug })
   const episodes: Episode[] = await queryEpisodesByShow({ show: show.slug })
   return (
-    <div>
+    <Modal>
       <h1 className="text-3xl font-semibold">{show.title}</h1>
       <h2>{(show.curatedBy as Artist[])[0].name}</h2>
       <div className="mt-4">
@@ -27,7 +28,7 @@ export default async function ShowPage({ params }: Props) {
           </div>
         ))}
       </div>
-    </div>
+    </Modal>
   )
 }
 

@@ -7,19 +7,24 @@ import { ReactNode } from 'react'
 
 type LayoutProps = {
   children: ReactNode
+  modal: ReactNode
 }
 
 import '../styles/globals.css'
 import Nav from '../components/Nav'
 import Footer from '../components/Footer'
 
-export default function RootLayout({ children }: LayoutProps) {
+export default function RootLayout({ children, modal }: LayoutProps) {
   return (
     <html lang="en">
-      <body className="grid h-screen grid-rows-[auto,1fr,auto]">
-        <Nav />
-        <main className="overflow-y-scroll">{children}</main>
-        <Footer />
+      <body>
+        {modal}
+        <div id="modal-root"></div>
+        <div className="grid h-screen grid-rows-[auto,1fr,auto]">
+          <Nav />
+          <main className="overflow-y-scroll">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   )

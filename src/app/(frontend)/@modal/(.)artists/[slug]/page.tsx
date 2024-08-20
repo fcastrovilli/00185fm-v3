@@ -1,8 +1,9 @@
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { cache } from 'react'
-import { Show, Artist, Episode } from '@/payload-types'
+import { Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
+import { Modal } from '@/app/components/Modal'
 
 type Props = {
   params: {
@@ -10,32 +11,28 @@ type Props = {
   }
 }
 
-export default async function ShowPage({ params }: Props) {
-  const show: Show = await queryShowBySlug({ slug: params.slug })
-  const episodes: Episode[] = await queryEpisodesByShow({ show: show.slug })
+export default async function ArtistPage({ params }: Props) {
+  const artist: Artist = await queryArtistBySlug({ slug: params.slug })
+  const episodes: Episode[] = await queryEpisodesByArtist({ artist: artist.id })
   return (
-    <div>
-      <h1 className="text-3xl font-semibold">{show.title}</h1>
-      <h2>{(show.curatedBy as Artist[])[0].name}</h2>
+    <Modal>
+      <h1 className="text-3xl font-semibold">{artist.name}</h1>
       <div className="mt-4">
         {episodes.map((episode) => (
-          <div
-            key={episode.slug}
-            className="bg-slate-300/70 p-4 rounded-lg flex flex-col gap-2 my-2"
-          >
+          <div key={episode.id} className="bg-slate-300/70 p-4 rounded-lg flex flex-col gap-2 my-2">
             <Link href={`/episodes/${episode.slug}`}>{episode.title}</Link>
           </div>
         ))}
       </div>
-    </div>
+    </Modal>
   )
 }
 
-const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryArtistBySlug = cache(async ({ slug }: { slug: string }) => {
   const payload = await getPayloadHMR({ config: configPromise })
 
   const result = await payload.find({
-    collection: 'shows',
+    collection: 'artists',
     limit: 1,
     depth: 1,
     where: {
@@ -48,7 +45,7 @@ const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
+const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist: string }) => {
   const payload = await getPayloadHMR({ config: configPromise })
 
   const result = await payload.find({
@@ -56,8 +53,8 @@ const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
     limit: 12,
     depth: 1,
     where: {
-      'show.slug': {
-        equals: show,
+      curatedBy: {
+        equals: artistId,
       },
     },
   })

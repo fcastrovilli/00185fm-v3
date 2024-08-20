@@ -14,14 +14,12 @@ export default async function ArtistPage({ params }: Props) {
   const artist: Artist = await queryArtistBySlug({ slug: params.slug })
   const episodes: Episode[] = await queryEpisodesByArtist({ artist: artist.id })
   return (
-    <div className="p-4">
-      <h1>{artist.name}</h1>
+    <div>
+      <h1 className="text-3xl font-semibold">{artist.name}</h1>
       <div className="mt-4">
         {episodes.map((episode) => (
-          <div key={episode.slug}>
-            <h2>
-              <Link href={`/episodes/${episode.slug}`}>{episode.title}</Link>
-            </h2>
+          <div key={episode.id} className="bg-slate-300/70 p-4 rounded-lg flex flex-col gap-2 my-2">
+            <Link href={`/episodes/${episode.slug}`}>{episode.title}</Link>
           </div>
         ))}
       </div>
