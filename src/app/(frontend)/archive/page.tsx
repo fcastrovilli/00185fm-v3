@@ -1,5 +1,6 @@
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import Link from 'next/link'
 
 export default async function Archive() {
   const payload = await getPayloadHMR({ config: configPromise })
@@ -15,7 +16,7 @@ export default async function Archive() {
       <ul>
         {episodes.docs.map((episode) => (
           <li key={episode.slug}>
-            <a href={`/archive/${episode.slug}`}>{episode.title}</a>
+            <Link href={`/archive/${episode.slug}`}>{episode.title}</Link>
           </li>
         ))}
       </ul>
