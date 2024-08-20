@@ -12,9 +12,18 @@ export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string }) => {
     draft,
     overrideAccess: true,
     where: {
-      slug: {
-        equals: slug,
-      },
+      and: [
+        {
+          slug: {
+            equals: slug,
+          },
+        },
+        {
+          public: {
+            equals: true,
+          },
+        },
+      ],
     },
   })
 
@@ -50,9 +59,18 @@ export const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist
     draft,
     overrideAccess: true,
     where: {
-      curatedBy: {
-        equals: artistId,
-      },
+      and: [
+        {
+          curatedBy: {
+            equals: artistId,
+          },
+        },
+        {
+          public: {
+            equals: true,
+          },
+        },
+      ],
     },
   })
 
@@ -88,9 +106,18 @@ export const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
     overrideAccess: true,
     depth: 1,
     where: {
-      'show.slug': {
-        equals: show,
-      },
+      and: [
+        {
+          'show.slug': {
+            equals: show,
+          },
+        },
+        {
+          public: {
+            equals: true,
+          },
+        },
+      ],
     },
   })
 
