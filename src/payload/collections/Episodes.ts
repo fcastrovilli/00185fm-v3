@@ -19,13 +19,13 @@ export const Episodes: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
-          path: `/archive/${typeof data?.slug === 'string' ? data.slug : ''}`,
+          path: `/episodes/${typeof data?.slug === 'string' ? data.slug : ''}`,
         })
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
       },
     },
     preview: (doc) =>
-      generatePreviewPath({ path: `/archive/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+      generatePreviewPath({ path: `/episodes/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
   },
   endpoints: [
     {

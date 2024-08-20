@@ -11,8 +11,9 @@ type LayoutProps = {
 }
 
 import '../styles/globals.css'
-import Nav from '../components/Nav'
+import Nav from '../components/Header'
 import Footer from '../components/Footer'
+import { LivePreviewListener } from '../components/LivePreviewListener'
 
 export default function RootLayout({ children, modal }: LayoutProps) {
   return (
@@ -20,6 +21,7 @@ export default function RootLayout({ children, modal }: LayoutProps) {
       <body>
         {modal}
         <div id="modal-root"></div>
+        <LivePreviewListener />
         <div className="grid h-screen grid-rows-[auto,1fr,auto]">
           <Nav />
           <main className="overflow-y-scroll">{children}</main>
