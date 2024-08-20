@@ -1,13 +1,23 @@
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { payload } from '@/payload'
 import { cache } from 'react'
 import { Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
+import { draftMode } from 'next/headers'
 
 type Props = {
   params: {
     slug: string
   }
+}
+
+export async function generateStaticParams() {
+  const artists = await payload.find({
+    collection: 'artists',
+    draft: false,
+    limit: 1000,
+  })
+
+  return artists.docs?.map(({ slug }) => slug)
 }
 
 export default async function ArtistPage({ params }: Props) {
@@ -27,13 +37,15 @@ export default async function ArtistPage({ params }: Props) {
   )
 }
 
-const queryArtistBySlug = cache(async ({ slug }: { slug: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
+export const queryArtistBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = draftMode()
 
-  const result = await payload.find({
+  const result = await payload?.find({
     collection: 'artists',
     limit: 1,
     depth: 1,
+    draft,
+    overrideAccess: true,
     where: {
       slug: {
         equals: slug,
@@ -41,16 +53,18 @@ const queryArtistBySlug = cache(async ({ slug }: { slug: string }) => {
     },
   })
 
-  return result.docs?.[0] || null
+  return result?.docs?.[0] || null
 })
 
-const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
+export const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist: string }) => {
+  const { isEnabled: draft } = draftMode()
 
-  const result = await payload.find({
+  const result = await payload?.find({
     collection: 'episodes',
     limit: 12,
     depth: 1,
+    draft,
+    overrideAccess: true,
     where: {
       curatedBy: {
         equals: artistId,
@@ -58,5 +72,5 @@ const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist: strin
     },
   })
 
-  return result.docs || []
+  return result?.docs || []
 })

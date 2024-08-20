@@ -1,13 +1,19 @@
 import { Artist, Show } from '@/payload-types'
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { payload } from '@/payload'
+import { draftMode } from 'next/headers'
 import Link from 'next/link'
+import type { Metadata } from 'next/types'
+
+export const dynamic = 'force-static'
+export const revalidate = 600
 
 export default async function Archive() {
-  const payload = await getPayloadHMR({ config: configPromise })
+  const { isEnabled: draft } = draftMode()
 
   const episodes = await payload.find({
     collection: 'episodes',
+    draft,
+    overrideAccess: true,
     depth: 1,
     limit: 12,
   })
@@ -27,4 +33,10 @@ export default async function Archive() {
       ))}
     </div>
   )
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: `00185fm | Archive`,
+  }
 }

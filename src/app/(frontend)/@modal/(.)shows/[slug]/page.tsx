@@ -1,9 +1,10 @@
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { cache } from 'react'
 import { Show, Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
 import { Modal } from '@/app/components/Modal'
+import { queryEpisodesByShow, queryShowBySlug } from '@/app/(frontend)/shows/[slug]/page'
+import { generateStaticParams as generateShowParams } from '@/app/(frontend)/shows/[slug]/page'
+
+export const generateStaticParams = generateShowParams
 
 type Props = {
   params: {
@@ -31,37 +32,3 @@ export default async function ShowPage({ params }: Props) {
     </Modal>
   )
 }
-
-const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'shows',
-    limit: 1,
-    depth: 1,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  return result.docs?.[0] || null
-})
-
-const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'episodes',
-    limit: 12,
-    depth: 1,
-    where: {
-      'show.slug': {
-        equals: show,
-      },
-    },
-  })
-
-  return result.docs || []
-})

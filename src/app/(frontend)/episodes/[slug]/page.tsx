@@ -1,12 +1,22 @@
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { payload } from '@/payload'
 import { cache } from 'react'
 import { Episode, Artist, Show } from '@/payload-types'
+import { draftMode } from 'next/headers'
 
 type Props = {
   params: {
     slug: string
   }
+}
+
+export async function generateStaticParams() {
+  const episodes = await payload.find({
+    collection: 'episodes',
+    draft: false,
+    limit: 1000,
+  })
+
+  return episodes.docs?.map(({ slug }) => slug)
 }
 
 export default async function EpisodePage({ params }: Props) {
@@ -21,13 +31,15 @@ export default async function EpisodePage({ params }: Props) {
   )
 }
 
-const queryEpisodeBySlug = cache(async ({ slug }: { slug: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
+export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = draftMode()
 
   const result = await payload.find({
     collection: 'episodes',
     limit: 1,
     depth: 1,
+    draft,
+    overrideAccess: true,
     where: {
       slug: {
         equals: slug,

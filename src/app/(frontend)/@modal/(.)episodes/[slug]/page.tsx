@@ -1,8 +1,9 @@
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { cache } from 'react'
 import { Episode, Artist, Show } from '@/payload-types'
 import { Modal } from '@/app/components/Modal'
+import { queryEpisodeBySlug } from '@/app/(frontend)/episodes/[slug]/page'
+import { generateStaticParams as generateEpisodeParams } from '@/app/(frontend)/episodes/[slug]/page'
+
+export const generateStaticParams = generateEpisodeParams
 
 type Props = {
   params: {
@@ -21,20 +22,3 @@ export default async function EpisodePage({ params }: Props) {
     </Modal>
   )
 }
-
-const queryEpisodeBySlug = cache(async ({ slug }: { slug: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'episodes',
-    limit: 1,
-    depth: 1,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  return result.docs?.[0] || null
-})

@@ -1,9 +1,10 @@
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { cache } from 'react'
 import { Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
 import { Modal } from '@/app/components/Modal'
+import { queryArtistBySlug, queryEpisodesByArtist } from '@/app/(frontend)/artists/[slug]/page'
+import { generateStaticParams as generateArtistParams } from '@/app/(frontend)/artists/[slug]/page'
+
+export const generateStaticParams = generateArtistParams
 
 type Props = {
   params: {
@@ -27,37 +28,3 @@ export default async function ArtistPage({ params }: Props) {
     </Modal>
   )
 }
-
-const queryArtistBySlug = cache(async ({ slug }: { slug: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'artists',
-    limit: 1,
-    depth: 1,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  return result.docs?.[0] || null
-})
-
-const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'episodes',
-    limit: 12,
-    depth: 1,
-    where: {
-      curatedBy: {
-        equals: artistId,
-      },
-    },
-  })
-
-  return result.docs || []
-})

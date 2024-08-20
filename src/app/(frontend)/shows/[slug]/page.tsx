@@ -1,13 +1,23 @@
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { payload } from '@/payload'
 import { cache } from 'react'
 import { Show, Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
+import { draftMode } from 'next/headers'
 
 type Props = {
   params: {
     slug: string
   }
+}
+
+export async function generateStaticParams() {
+  const shows = await payload.find({
+    collection: 'shows',
+    draft: false,
+    limit: 1000,
+  })
+
+  return shows.docs?.map(({ slug }) => slug)
 }
 
 export default async function ShowPage({ params }: Props) {
@@ -31,12 +41,14 @@ export default async function ShowPage({ params }: Props) {
   )
 }
 
-const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
+export const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = draftMode()
 
   const result = await payload.find({
     collection: 'shows',
     limit: 1,
+    draft,
+    overrideAccess: true,
     depth: 1,
     where: {
       slug: {
@@ -48,12 +60,14 @@ const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
-  const payload = await getPayloadHMR({ config: configPromise })
+export const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
+  const { isEnabled: draft } = draftMode()
 
   const result = await payload.find({
     collection: 'episodes',
     limit: 12,
+    draft,
+    overrideAccess: true,
     depth: 1,
     where: {
       'show.slug': {
