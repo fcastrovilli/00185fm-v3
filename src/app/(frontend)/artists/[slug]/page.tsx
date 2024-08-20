@@ -1,8 +1,7 @@
 import { payload } from '@/payload'
-import { cache } from 'react'
 import { Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
-import { draftMode } from 'next/headers'
+import { queryArtistBySlug, queryEpisodesByArtist } from '@/app/query'
 
 type Props = {
   params: {
@@ -36,41 +35,3 @@ export default async function ArtistPage({ params }: Props) {
     </div>
   )
 }
-
-export const queryArtistBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = draftMode()
-
-  const result = await payload?.find({
-    collection: 'artists',
-    limit: 1,
-    depth: 1,
-    draft,
-    overrideAccess: true,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  return result?.docs?.[0] || null
-})
-
-export const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist: string }) => {
-  const { isEnabled: draft } = draftMode()
-
-  const result = await payload?.find({
-    collection: 'episodes',
-    limit: 12,
-    depth: 1,
-    draft,
-    overrideAccess: true,
-    where: {
-      curatedBy: {
-        equals: artistId,
-      },
-    },
-  })
-
-  return result?.docs || []
-})

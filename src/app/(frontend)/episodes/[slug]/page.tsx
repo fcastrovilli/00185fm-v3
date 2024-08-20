@@ -1,7 +1,6 @@
 import { payload } from '@/payload'
-import { cache } from 'react'
 import { Episode, Artist, Show } from '@/payload-types'
-import { draftMode } from 'next/headers'
+import { queryEpisodeBySlug } from '@/app/query'
 
 type Props = {
   params: {
@@ -30,22 +29,3 @@ export default async function EpisodePage({ params }: Props) {
     </div>
   )
 }
-
-export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = draftMode()
-
-  const result = await payload.find({
-    collection: 'episodes',
-    limit: 1,
-    depth: 1,
-    draft,
-    overrideAccess: true,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  return result.docs?.[0] || null
-})

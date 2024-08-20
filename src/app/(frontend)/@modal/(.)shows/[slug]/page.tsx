@@ -1,8 +1,8 @@
 import { Show, Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
 import { Modal } from '@/app/components/Modal'
-import { queryEpisodesByShow, queryShowBySlug } from '@/app/(frontend)/shows/[slug]/page'
 import { generateStaticParams as generateShowParams } from '@/app/(frontend)/shows/[slug]/page'
+import { queryEpisodesByShow, queryShowBySlug } from '@/app/query'
 
 export const generateStaticParams = generateShowParams
 

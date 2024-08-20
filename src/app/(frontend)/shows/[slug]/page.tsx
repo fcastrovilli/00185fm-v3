@@ -1,8 +1,7 @@
 import { payload } from '@/payload'
-import { cache } from 'react'
 import { Show, Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
-import { draftMode } from 'next/headers'
+import { queryEpisodesByShow, queryShowBySlug } from '@/app/query'
 
 type Props = {
   params: {
@@ -40,41 +39,3 @@ export default async function ShowPage({ params }: Props) {
     </div>
   )
 }
-
-export const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = draftMode()
-
-  const result = await payload.find({
-    collection: 'shows',
-    limit: 1,
-    draft,
-    overrideAccess: true,
-    depth: 1,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
-
-  return result.docs?.[0] || null
-})
-
-export const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
-  const { isEnabled: draft } = draftMode()
-
-  const result = await payload.find({
-    collection: 'episodes',
-    limit: 12,
-    draft,
-    overrideAccess: true,
-    depth: 1,
-    where: {
-      'show.slug': {
-        equals: show,
-      },
-    },
-  })
-
-  return result.docs || []
-})

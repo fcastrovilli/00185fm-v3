@@ -1,7 +1,7 @@
 import { Episode, Artist, Show } from '@/payload-types'
 import { Modal } from '@/app/components/Modal'
-import { queryEpisodeBySlug } from '@/app/(frontend)/episodes/[slug]/page'
 import { generateStaticParams as generateEpisodeParams } from '@/app/(frontend)/episodes/[slug]/page'
+import { queryEpisodeBySlug } from '@/app/query'
 
 export const generateStaticParams = generateEpisodeParams
 
