@@ -49,7 +49,7 @@ export default async function EpisodePage({ params }: Props) {
     }
   }
   return (
-    <div className="p-4">
+    <div>
       <h1 className="text-3xl font-semibold">{episode.title}</h1>
       <h2>{(episode.curatedBy as Artist).name}</h2>
       <h3>{(episode.show as Show).title}</h3>

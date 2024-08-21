@@ -23,7 +23,7 @@ export default async function Archive() {
     },
   })
   return (
-    <div className="p-4">
+    <div>
       <h1 className="text-3xl font-semibold">Archive</h1>
       {episodes.docs.map((episode) => (
         <div key={episode.id} className="bg-slate-300/70 p-4 rounded-lg flex flex-col gap-2 my-2">

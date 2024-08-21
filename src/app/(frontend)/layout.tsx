@@ -24,7 +24,7 @@ export default function RootLayout({ children, modal }: LayoutProps) {
         <LivePreviewListener />
         <div className="grid h-screen grid-rows-[auto,1fr,auto]">
           <Nav />
-          <main className="overflow-y-scroll">{children}</main>
+          <main className="overflow-y-scroll p-4">{children}</main>
           <Footer />
         </div>
       </body>
