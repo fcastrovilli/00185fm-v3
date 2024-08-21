@@ -5,7 +5,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "cleanup": "docker compose -f docker-compose.db.yml down -v && rm -rf .next && rm -rf node_modules && rm next-env.d.ts",
+    "cleanup": "pnpm cleanup:docker && pnpm cleanup:node",
+    "cleanup:node": "rm -rf .next && rm -rf node_modules && rm next-env.d.ts",
+    "cleanup:docker": "docker compose -f docker-compose.db.yml down -v",
     "db": "docker compose -f docker-compose.db.yml up -d",
     "down": "docker compose -f docker-compose.db.yml down",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
