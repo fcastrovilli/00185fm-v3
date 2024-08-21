@@ -3,6 +3,7 @@ import { Episode, Artist, Show, Audio } from '@/payload-types'
 import { queryEpisodeBySlug } from '@/app/query'
 import Image from 'next/image'
 import { Image as ImageType } from '@/payload-types'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: {
@@ -27,6 +28,9 @@ export async function generateStaticParams() {
 
 export default async function EpisodePage({ params }: Props) {
   const episode: Episode = await queryEpisodeBySlug({ slug: params.slug })
+  if (!episode) {
+    notFound()
+  }
   function CustomImage() {
     if (episode.image) {
       return (

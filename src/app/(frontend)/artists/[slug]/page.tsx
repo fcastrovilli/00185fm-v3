@@ -2,6 +2,7 @@ import { payload } from '@/payload'
 import { Artist, Episode } from '@/payload-types'
 import Link from 'next/link'
 import { queryArtistBySlug, queryEpisodesByArtist } from '@/app/query'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: {
@@ -21,7 +22,13 @@ export async function generateStaticParams() {
 
 export default async function ArtistPage({ params }: Props) {
   const artist: Artist = await queryArtistBySlug({ slug: params.slug })
+
+  if (!artist) {
+    notFound()
+  }
+
   const episodes: Episode[] = await queryEpisodesByArtist({ artist: artist.id })
+
   return (
     <div>
       <h1 className="text-3xl font-semibold">{artist.name}</h1>
