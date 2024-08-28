@@ -3,7 +3,7 @@ import { isAdminOrEditor } from '../access/checks'
 import { Episode } from '@/payload-types'
 import publishEpisode from '../endpoints/publishEpisode'
 import { generatePreviewPath } from '../utils/generatePreviewPath'
-import { slugField } from '../fields/slugField'
+import { slugField } from '../fields/slug'
 
 export const Episodes: CollectionConfig = {
   slug: 'episodes',
@@ -123,6 +123,22 @@ export const Episodes: CollectionConfig = {
         position: 'sidebar',
         description: 'Should this episode be public?',
       },
+      hooks: {
+        beforeChange: [
+          async ({ siblingData }: { siblingData: Partial<Episode> }) => {
+            const now = new Date()
+            const today = now.setHours(0, 0, 0, 0)
+            if (siblingData.public && !siblingData.publishedAt) {
+              siblingData.public = false
+            } else if (
+              siblingData.publishedAt &&
+              new Date(siblingData.publishedAt).getTime() > today
+            ) {
+              siblingData.public = false
+            }
+          },
+        ],
+      },
     },
     {
       name: 'defaultPlaylist',
@@ -132,15 +148,6 @@ export const Episodes: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'Should this episode be added to the default playlist?',
-      },
-      hooks: {
-        beforeChange: [
-          ({ siblingData }: { siblingData: Partial<Episode> }) => {
-            if (siblingData && !siblingData.public) {
-              siblingData.defaultPlaylist = false
-            }
-          },
-        ],
       },
     },
     {
@@ -173,6 +180,6 @@ export const Episodes: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    slugField(),
+    ...slugField(),
   ],
 }
