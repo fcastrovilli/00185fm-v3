@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "seed": "payload run ./src/scripts/seed.ts",
     "cleanup": "pnpm cleanup:docker && pnpm cleanup:node",
     "cleanup:node": "rm -rf .next && rm -rf node_modules && rm next-env.d.ts",
     "cleanup:docker": "docker compose -f docker-compose.db.yml down -v",
@@ -38,6 +39,7 @@
     "sharp": "0.33.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.9",
     "@types/react": "npm:types-react@19.0.0-rc.0",
