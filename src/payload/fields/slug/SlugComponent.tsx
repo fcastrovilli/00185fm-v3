@@ -44,7 +44,7 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
 
   useEffect(() => {
     if (checkboxValue) setValue(formatSlug(fieldToUseValue))
-  }, [fieldToUseValue, checkboxValue])
+  }, [fieldToUseValue, checkboxValue, setValue])
 
   const handleLock = useCallback(
     (event: React.MouseEvent) => {
