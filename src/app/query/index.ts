@@ -2,7 +2,7 @@ import { payload } from '@/payload'
 import { draftMode } from 'next/headers'
 import { cache } from 'react'
 
-export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string }) => {
+export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string | null | undefined }) => {
   const { isEnabled: draft } = draftMode()
 
   const result = await payload.find({
@@ -30,7 +30,7 @@ export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-export const queryArtistBySlug = cache(async ({ slug }: { slug: string }) => {
+export const queryArtistBySlug = cache(async ({ slug }: { slug: string | null | undefined }) => {
   const { isEnabled: draft } = draftMode()
 
   const result = await payload?.find({
@@ -77,7 +77,7 @@ export const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist
   return result?.docs || []
 })
 
-export const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
+export const queryShowBySlug = cache(async ({ slug }: { slug: string | null | undefined }) => {
   const { isEnabled: draft } = draftMode()
 
   const result = await payload.find({
@@ -96,7 +96,7 @@ export const queryShowBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-export const queryEpisodesByShow = cache(async ({ show }: { show: string }) => {
+export const queryEpisodesByShow = cache(async ({ show }: { show: string | null | undefined }) => {
   const { isEnabled: draft } = draftMode()
 
   const result = await payload.find({
