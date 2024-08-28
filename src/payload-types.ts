@@ -92,7 +92,8 @@ export interface Artist {
     };
     [k: string]: unknown;
   } | null;
-  slug: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -138,13 +139,14 @@ export interface Episode {
     };
     [k: string]: unknown;
   } | null;
-  audio?: string | Audio | null;
-  image?: string | Image | null;
+  audio?: (string | null) | Audio;
+  image?: (string | null) | Image;
   public?: boolean | null;
   defaultPlaylist?: boolean | null;
   playlists?: (number | Playlist)[] | null;
   tags?: (string | Tag)[] | null;
-  slug: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -171,8 +173,9 @@ export interface Show {
     };
     [k: string]: unknown;
   } | null;
-  image?: string | Image | null;
-  slug: string;
+  image?: (string | null) | Image;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }

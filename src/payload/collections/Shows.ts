@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor } from '../access/checks'
-import { slugField } from '../fields/slugField'
+import { slugField } from '../fields/slug'
 
 export const Shows: CollectionConfig = {
   slug: 'shows',
@@ -40,6 +40,6 @@ export const Shows: CollectionConfig = {
         mimeType: { contains: 'image/*' },
       },
     },
-    slugField(),
+    ...slugField(),
   ],
 }

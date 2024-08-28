@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor } from '../access/checks'
-import { slugField } from '../fields/slugField'
+import { slugField } from '../fields/slug'
 
 export const Artists: CollectionConfig = {
   slug: 'artists',
@@ -24,6 +24,6 @@ export const Artists: CollectionConfig = {
       name: 'bio',
       type: 'richText',
     },
-    slugField('name'),
+    ...slugField('name'),
   ],
 }
