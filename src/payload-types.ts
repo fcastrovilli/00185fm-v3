@@ -121,7 +121,7 @@ export interface Audio {
 export interface Episode {
   id: string;
   title: string;
-  curatedBy: string | Artist;
+  curatedBy: (string | Artist)[];
   show: string | Show;
   publishedAt?: string | null;
   description?: {

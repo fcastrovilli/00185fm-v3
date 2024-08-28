@@ -55,7 +55,7 @@ export const Episodes: CollectionConfig = {
                   type: 'relationship',
                   relationTo: 'artists',
                   required: true,
-                  hasMany: false,
+                  hasMany: true,
                 },
                 {
                   name: 'show',

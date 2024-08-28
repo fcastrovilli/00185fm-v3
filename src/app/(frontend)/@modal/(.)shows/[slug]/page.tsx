@@ -18,7 +18,7 @@ export default async function ShowPage({ params }: Props) {
   return (
     <Modal>
       <h1 className="text-3xl font-semibold">{show.title}</h1>
-      <h2>{(show.curatedBy as Artist[])[0].name}</h2>
+      <h2>{(show.curatedBy as Artist[]).map((artist) => artist.name).join(', ')}</h2>
       <div className="mt-4">
         {episodes.map((episode) => (
           <div
