@@ -31,9 +31,11 @@ export default async function Archive() {
           <Link href={`/shows/${(episode.show as Show).slug}`}>
             Show: {(episode.show as Show).title}
           </Link>
-          <Link href={`/artists/${(episode.curatedBy as Artist).slug}`}>
-            Curated By: {(episode.curatedBy as Artist).name}
-          </Link>
+          {(episode.curatedBy as Artist[]).map((curatedBy) => (
+            <Link key={curatedBy.id} href={`/artists/${curatedBy.slug}`}>
+              Curated By: {curatedBy.name}
+            </Link>
+          ))}
         </div>
       ))}
     </div>
