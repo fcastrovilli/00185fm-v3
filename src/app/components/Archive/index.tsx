@@ -1,8 +1,7 @@
 'use client'
 
 import { getPaginatedEpisodes } from '@/app/actions'
-import { Artist, Episode, Show } from '@/payload-types'
-import Link from 'next/link'
+import { Episode } from '@/payload-types'
 import { PaginatedDocs } from 'payload'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
