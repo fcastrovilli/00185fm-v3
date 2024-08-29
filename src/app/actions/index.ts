@@ -8,7 +8,7 @@ export const getPaginatedEpisodes = cache(async ({ pageParam }: { pageParam?: nu
   const { isEnabled: draft } = draftMode()
   const result = await payload.find({
     collection: 'episodes',
-    limit: 12,
+    limit: 16,
     depth: 1,
     draft,
     page: pageParam,
@@ -24,12 +24,18 @@ export const getPaginatedEpisodes = cache(async ({ pageParam }: { pageParam?: nu
 })
 
 export const getPaginatedEpisodesByShow = cache(
-  async ({ show, pageParam }: { show: string | null | undefined; pageParam?: number }) => {
+  async ({
+    show_slug,
+    pageParam,
+  }: {
+    show_slug: string | null | undefined
+    pageParam?: number
+  }) => {
     const { isEnabled: draft } = draftMode()
 
     const result = await payload.find({
       collection: 'episodes',
-      limit: 12,
+      limit: 5,
       draft,
       overrideAccess: true,
       pagination: true,
@@ -39,7 +45,7 @@ export const getPaginatedEpisodesByShow = cache(
         and: [
           {
             'show.slug': {
-              equals: show,
+              equals: show_slug,
             },
           },
           {
@@ -61,7 +67,7 @@ export const getPaginatedEpisodesByArtist = cache(
 
     const result = await payload?.find({
       collection: 'episodes',
-      limit: 12,
+      limit: 5,
       depth: 1,
       page: pageParam,
       pagination: true,
