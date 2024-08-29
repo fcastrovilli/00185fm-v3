@@ -6,9 +6,9 @@ import { formatSlug } from '@/payload/fields/slug/formatSlug'
 
 const payload = await getPayload({ config })
 async function seed() {
-  const numberOfArtists = Math.floor(Math.random() * 10) + 10
-  const numberOfShows = Math.floor(Math.random() * 10) + 10
-  const numberOfEpisodes = Math.floor(Math.random() * 50) + 10
+  const numberOfArtists = Math.floor(Math.random() * 20) + 10
+  const numberOfShows = Math.floor(Math.random() * 20) + 10
+  const numberOfEpisodes = Math.floor(Math.random() * 100) + 10
 
   const artists: Partial<Artist>[] = []
   const shows: Partial<Show>[] = []
@@ -43,7 +43,7 @@ async function seed() {
       const episode = await generateFakeEpisode(random_show.id as string, random_artists)
       episodes.push(episode)
     }
-    console.log(`🩷 Generated ${numberOfShows} episodes`)
+    console.log(`🩷 Generated ${numberOfEpisodes} episodes`)
 
     console.log(`🎉 !! Successfully seeded !! 🎉`)
   } catch (error) {
