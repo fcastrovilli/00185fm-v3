@@ -16,9 +16,9 @@ const EpisodeCard = ({ episode }: Props) => {
       <Link scroll={false} href={`/shows/${(episode.show as Show).slug}`}>
         Show: {(episode.show as Show).title}
       </Link>
-      {(episode.curatedBy as Artist[]).map((curatedBy) => (
-        <Link scroll={false} key={curatedBy.id} href={`/artists/${curatedBy.slug}`}>
-          Curated By: {curatedBy.name}
+      {(episode.curatedBy as Artist[]).map((artist, i) => (
+        <Link scroll={false} key={`${artist.slug}-${i}`} href={`/artists/${artist.slug}`}>
+          Curated By: {artist.name}
         </Link>
       ))}
     </div>
