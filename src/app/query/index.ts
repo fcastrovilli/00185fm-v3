@@ -2,6 +2,25 @@ import { payload } from '@/payload'
 import { draftMode } from 'next/headers'
 import { cache } from 'react'
 
+export const queryPaginatedEpisodes = cache(async ({ pageParam = 1 }: { pageParam?: number }) => {
+  const { isEnabled: draft } = draftMode()
+  const result = await payload.find({
+    collection: 'episodes',
+    limit: 12,
+    depth: 1,
+    draft,
+    page: pageParam,
+    pagination: true,
+    overrideAccess: true,
+    where: {
+      public: {
+        equals: true,
+      },
+    },
+  })
+  return result
+})
+
 export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string | null | undefined }) => {
   const { isEnabled: draft } = draftMode()
 

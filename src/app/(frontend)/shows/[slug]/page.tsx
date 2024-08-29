@@ -38,7 +38,9 @@ export default async function ShowPage({ params }: Props) {
             key={episode.slug}
             className="bg-slate-300/70 p-4 rounded-lg flex flex-col gap-2 my-2"
           >
-            <Link href={`/episodes/${episode.slug}`}>{episode.title}</Link>
+            <Link scroll={false} href={`/episodes/${episode.slug}`}>
+              {episode.title}
+            </Link>
           </div>
         ))}
       </div>
