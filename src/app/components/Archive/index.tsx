@@ -37,9 +37,11 @@ const Archive = ({ init_paginated_episodes, children }: Props) => {
   return (
     <div>
       {children}
-      {episodes.map((episode) => (
-        <EpisodeCard episode={episode} key={episode.id} />
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {episodes.map((episode) => (
+          <EpisodeCard episode={episode} key={episode.id} />
+        ))}
+      </div>
       <div className="w-full flex justify-center">
         {(hasNextPage && (
           <div className="text-2xl" ref={scrollTrigger}>
