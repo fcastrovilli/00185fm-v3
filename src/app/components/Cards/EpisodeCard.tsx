@@ -1,7 +1,8 @@
 'use client'
 
-import { Artist, Episode, Show } from '@/payload-types'
+import { Artist, Episode, Show, Image as ImageType } from '@/payload-types'
 import Link from 'next/link'
+import { CustomImage } from '../CustomImage'
 
 type Props = {
   episode: Episode
@@ -21,6 +22,7 @@ const EpisodeCard = ({ episode }: Props) => {
           Curated By: {artist.name}
         </Link>
       ))}
+      <CustomImage image={episode.image as ImageType} alt={episode.title} size="small" />
     </div>
   )
 }

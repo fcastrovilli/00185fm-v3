@@ -26,11 +26,7 @@ export const Images: CollectionConfig = {
       {
         name: 'big',
         width: 1024,
-        // By specifying `undefined` or leaving a height undefined,
-        // the image will be sized to a certain width,
-        // but it will retain its original aspect ratio
-        // and calculate a height automatically.
-        height: undefined,
+        height: 1024,
         position: 'centre',
         fit: 'inside',
         formatOptions: { format: 'webp' },
