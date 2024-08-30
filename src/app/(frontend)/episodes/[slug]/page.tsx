@@ -1,8 +1,6 @@
 import { payload } from '@/payload'
-import { Episode } from '@/payload-types'
-import { queryEpisodeBySlug } from '@/app/query'
-import { notFound } from 'next/navigation'
 import EpisodeComponent from '@/app/components/Episode'
+import { EpisodeProvider } from '@/app/components/Episode/server'
 
 type Props = {
   params: {
@@ -26,10 +24,7 @@ export async function generateStaticParams() {
 }
 
 export default async function EpisodePage({ params }: Props) {
-  const episode: Episode = await queryEpisodeBySlug({ slug: params.slug })
-  if (!episode) {
-    notFound()
-  }
+  const { episode } = await EpisodeProvider({ params })
 
   return <EpisodeComponent episode={episode} />
 }

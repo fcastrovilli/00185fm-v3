@@ -1,8 +1,7 @@
-import { Episode } from '@/payload-types'
 import { Modal } from '@/app/components/Modal'
 import { generateStaticParams as generateEpisodeParams } from '@/app/(frontend)/episodes/[slug]/page'
-import { queryEpisodeBySlug } from '@/app/query'
 import EpisodeComponent from '@/app/components/Episode'
+import { EpisodeProvider } from '@/app/components/Episode/server'
 
 export const generateStaticParams = generateEpisodeParams
 
@@ -13,7 +12,7 @@ type Props = {
 }
 
 export default async function EpisodePage({ params }: Props) {
-  const episode: Episode = await queryEpisodeBySlug({ slug: params.slug })
+  const { episode } = await EpisodeProvider({ params })
   return (
     <Modal>
       <EpisodeComponent episode={episode} />

@@ -1,8 +1,6 @@
 import { payload } from '@/payload'
-import { Artist, Episode } from '@/payload-types'
-import { queryArtistBySlug, queryEpisodesByArtist } from '@/app/query'
-import { notFound } from 'next/navigation'
 import ArtistComponent from '@/app/components/Artist'
+import { ArtistProvider } from '@/app/components/Artist/server'
 
 type Props = {
   params: {
@@ -21,13 +19,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ArtistPage({ params }: Props) {
-  const artist: Artist = await queryArtistBySlug({ slug: params.slug })
+  const { artist, episodes } = await ArtistProvider({ params })
 
-  if (!artist) {
-    notFound()
-  }
-
-  const episodes: Episode[] = await queryEpisodesByArtist({ artist: artist.id })
-
-  return <ArtistComponent artist={artist} episodes={episodes} />
+  return <ArtistComponent artist={artist} init_paginated_episodes={episodes} />
 }

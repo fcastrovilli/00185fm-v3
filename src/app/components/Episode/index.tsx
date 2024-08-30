@@ -1,3 +1,4 @@
+'use client'
 import { Episode, Artist, Show } from '@/payload-types'
 import Image from 'next/image'
 import { Image as ImageType } from '@/payload-types'
@@ -7,7 +8,7 @@ type Props = {
   episode: Episode
 }
 
-export default async function EpisodeComponent({ episode }: Props) {
+export default function EpisodeComponent({ episode }: Props) {
   function CustomImage() {
     if (episode.image) {
       return (

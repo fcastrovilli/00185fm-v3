@@ -1,9 +1,6 @@
 import { payload } from '@/payload'
-import { Show, Artist, Episode } from '@/payload-types'
-import Link from 'next/link'
-import { queryEpisodesByShow, queryShowBySlug } from '@/app/query'
-import { notFound } from 'next/navigation'
 import ShowComponent from '@/app/components/Show'
+import { ShowProvider } from '@/app/components/Show/server'
 
 type Props = {
   params: {
@@ -22,12 +19,6 @@ export async function generateStaticParams() {
 }
 
 export default async function ShowPage({ params }: Props) {
-  const show: Show = await queryShowBySlug({ slug: params.slug })
-
-  if (!show) {
-    notFound()
-  }
-
-  const episodes: Episode[] = await queryEpisodesByShow({ show: show.slug })
-  return <ShowComponent show={show} episodes={episodes} />
+  const { show, episodes: init_paginated_episodes } = await ShowProvider({ params })
+  return <ShowComponent show={show} init_paginated_episodes={init_paginated_episodes} />
 }

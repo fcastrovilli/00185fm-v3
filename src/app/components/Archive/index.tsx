@@ -12,7 +12,7 @@ type Props = {
   children: React.ReactNode
 }
 
-const Archive = ({ init_paginated_episodes, children }: Props) => {
+const ArchiveComponent = ({ init_paginated_episodes, children }: Props) => {
   const [nextPage, setNextPage] = useState(init_paginated_episodes.nextPage)
   const [hasNextPage, setHasNextPage] = useState(init_paginated_episodes.hasNextPage)
   const [episodes, setEpisodes] = useState(init_paginated_episodes.docs)
@@ -52,4 +52,4 @@ const Archive = ({ init_paginated_episodes, children }: Props) => {
   )
 }
 
-export default Archive
+export default ArchiveComponent

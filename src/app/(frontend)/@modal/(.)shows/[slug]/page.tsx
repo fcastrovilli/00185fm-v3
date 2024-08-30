@@ -1,8 +1,7 @@
-import { Show } from '@/payload-types'
 import { Modal } from '@/app/components/Modal'
 import { generateStaticParams as generateShowParams } from '@/app/(frontend)/shows/[slug]/page'
-import { queryEpisodesByShow, queryShowBySlug } from '@/app/query'
 import ShowComponent from '@/app/components/Show'
+import { ShowProvider } from '@/app/components/Show/server'
 
 export const generateStaticParams = generateShowParams
 
@@ -13,11 +12,10 @@ type Props = {
 }
 
 export default async function ShowPage({ params }: Props) {
-  const show: Show = await queryShowBySlug({ slug: params.slug })
-  const episodes = await queryEpisodesByShow({ show: show.slug })
+  const { show, episodes } = await ShowProvider({ params })
   return (
     <Modal>
-      <ShowComponent show={show} episodes={episodes} />
+      <ShowComponent show={show} init_paginated_episodes={episodes} />
     </Modal>
   )
 }
