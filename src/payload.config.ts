@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 
 // Payload
 // import { payloadCloudPlugin } from '@payloadcms/plugin-cloud'
+import { searchPlugin } from '@payloadcms/plugin-search'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -100,6 +101,14 @@ export default buildConfig({
         },
         endpoint: process.env.S3_ENDPOINT || '',
         region: process.env.S3_REGION || '',
+      },
+    }),
+    searchPlugin({
+      collections: ['episodes', 'shows', 'artists'],
+      defaultPriorities: {
+        episodes: 10,
+        shows: 20,
+        artists: 30,
       },
     }),
     // payloadCloudPlugin(),

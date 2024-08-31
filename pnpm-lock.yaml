@@ -24,6 +24,9 @@ importers:
       '@payloadcms/plugin-cloud':
         specifier: 3.0.0-beta.96
         version: 3.0.0-beta.96(@aws-sdk/client-sso-oidc@3.637.0(@aws-sdk/client-sts@3.637.0))(payload@3.0.0-beta.96(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(typescript@5.5.4))
+      '@payloadcms/plugin-search':
+        specifier: 3.0.0-beta.96
+        version: 3.0.0-beta.96(monaco-editor@0.38.0)(next@15.0.0-canary.104(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(sass@1.77.4))(payload@3.0.0-beta.96(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(typescript@5.5.4))(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(types-react@19.0.0-rc.0)(typescript@5.5.4)
       '@payloadcms/richtext-lexical':
         specifier: 3.0.0-beta.96
         version: 3.0.0-beta.96(uvsugazb5zpn6fhaoehu2hpike)
@@ -1023,6 +1026,13 @@ packages:
     resolution: {integrity: sha512-+f8lvwEKFl/nucZAxztdswqySlztIlVTNwo4lS6NsVH94yqbYYDXJlpZbvPwGEu0Tu6v9SpFjXcttUHZUQDtBQ==}
     peerDependencies:
       payload: 3.0.0-beta.96
+
+  '@payloadcms/plugin-search@3.0.0-beta.96':
+    resolution: {integrity: sha512-7Xrkhj7DbQluw9opHAs247eJ+q/UoUR7NUTQMHrKPwo3fZ9Q/GI5YADAnPoQgdR6KUGR44lWkPpBJ7Q/aYfZKQ==}
+    peerDependencies:
+      payload: 3.0.0-beta.96
+      react: ^19.0.0 || ^19.0.0-rc-06d0b89e-20240801
+      react-dom: ^19.0.0 || ^19.0.0-rc-06d0b89e-20240801
 
   '@payloadcms/richtext-lexical@3.0.0-beta.96':
     resolution: {integrity: sha512-+72gBSzftusumSm4SEOm6y9s9uBKr1VFuQ2XU8TqN8HdLTUVpJvC4DO+RKveyZWAxnBkh3SJa3hdESM5cm9yQg==}
@@ -5281,6 +5291,19 @@ snapshots:
       - aws-crt
       - debug
       - encoding
+
+  '@payloadcms/plugin-search@3.0.0-beta.96(monaco-editor@0.38.0)(next@15.0.0-canary.104(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(sass@1.77.4))(payload@3.0.0-beta.96(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(typescript@5.5.4))(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(types-react@19.0.0-rc.0)(typescript@5.5.4)':
+    dependencies:
+      '@payloadcms/ui': 3.0.0-beta.96(monaco-editor@0.38.0)(next@15.0.0-canary.104(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(sass@1.77.4))(payload@3.0.0-beta.96(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(typescript@5.5.4))(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(types-react@19.0.0-rc.0)(typescript@5.5.4)
+      payload: 3.0.0-beta.96(graphql@16.9.0)(monaco-editor@0.38.0)(react-dom@19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801))(react@19.0.0-rc-06d0b89e-20240801)(typescript@5.5.4)
+      react: 19.0.0-rc-06d0b89e-20240801
+      react-dom: 19.0.0-rc-06d0b89e-20240801(react@19.0.0-rc-06d0b89e-20240801)
+    transitivePeerDependencies:
+      - '@types/react'
+      - monaco-editor
+      - next
+      - supports-color
+      - typescript
 
   '@payloadcms/richtext-lexical@3.0.0-beta.96(uvsugazb5zpn6fhaoehu2hpike)':
     dependencies:

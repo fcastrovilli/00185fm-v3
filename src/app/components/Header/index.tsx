@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SearchComponent } from '../Search'
 
 export default function Nav() {
   return (
@@ -9,6 +10,7 @@ export default function Nav() {
         </Link>
       </div>
       <div className="flex gap-4">
+        <SearchComponent />
         <Link scroll={false} href={'/archive'}>
           Archive
         </Link>

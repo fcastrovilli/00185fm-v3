@@ -19,6 +19,7 @@ export interface Config {
     playlists: Playlist;
     shows: Show;
     tags: Tag;
+    search: Search;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -234,6 +235,30 @@ export interface Playlist {
 export interface Tag {
   id: string;
   name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search".
+ */
+export interface Search {
+  id: string;
+  title?: string | null;
+  priority?: number | null;
+  doc:
+    | {
+        relationTo: 'episodes';
+        value: string | Episode;
+      }
+    | {
+        relationTo: 'shows';
+        value: string | Show;
+      }
+    | {
+        relationTo: 'artists';
+        value: string | Artist;
+      };
   updatedAt: string;
   createdAt: string;
 }
