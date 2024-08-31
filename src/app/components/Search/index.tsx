@@ -31,6 +31,7 @@ export function SearchComponent() {
         className="border border-black"
         type="text"
         value={text}
+        placeholder="Search..."
         onChange={(e) => setText(e.target.value)}
       />
     </form>

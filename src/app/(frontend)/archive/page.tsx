@@ -1,13 +1,15 @@
+import { getPaginatedEpisodes } from '@/app/actions'
 import ArchiveComponent from '@/app/components/Archive'
-import { SearchAction } from '@/app/components/Search/server'
 import type { Metadata } from 'next/types'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
 export default async function Archive() {
-  const search = await SearchAction({ text: '' })
-  return <ArchiveComponent init_episodes={search.episodes} init_search={search.search} />
+  const episodes = await getPaginatedEpisodes({
+    pageParam: 1,
+  })
+  return <ArchiveComponent init_episodes={episodes} />
 }
 
 export function generateMetadata(): Metadata {

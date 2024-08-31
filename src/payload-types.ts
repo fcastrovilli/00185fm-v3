@@ -259,6 +259,7 @@ export interface Search {
         relationTo: 'artists';
         value: string | Artist;
       };
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
 }

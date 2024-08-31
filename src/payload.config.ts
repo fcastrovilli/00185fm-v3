@@ -110,6 +110,25 @@ export default buildConfig({
         shows: 20,
         artists: 30,
       },
+      searchOverrides: {
+        slug: 'search',
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
+          {
+            name: 'slug',
+            type: 'text',
+            admin: {
+              readOnly: true,
+            },
+          },
+        ],
+      },
+      beforeSync: ({ originalDoc, searchDoc }) => {
+        return {
+          ...searchDoc,
+          slug: originalDoc.slug,
+        }
+      },
     }),
     // payloadCloudPlugin(),
   ],
