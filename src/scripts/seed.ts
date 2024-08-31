@@ -4,7 +4,9 @@ import config from '@payload-config'
 import { Artist, Episode, Show } from '@/payload-types'
 import { formatSlug } from '@/payload/fields/slug/formatSlug'
 
+const wipe_db = true
 const payload = await getPayload({ config })
+
 async function seed() {
   const numberOfArtists = Math.floor(Math.random() * 20) + 10
   const numberOfShows = Math.floor(Math.random() * 20) + 10
@@ -49,8 +51,6 @@ async function seed() {
   } catch (error) {
     console.log(error)
   }
-
-  process.exit(0)
 }
 
 async function generateFakeArtist(): Promise<Partial<Artist>> {
@@ -120,4 +120,78 @@ async function generateFakeEpisode(
   return episode
 }
 
-await seed()
+async function wipeCollections() {
+  if (wipe_db) {
+    try {
+      await payload.delete({
+        collection: 'artists',
+        where: {
+          id: {
+            exists: true,
+          },
+        },
+      })
+      console.log('🧹 Wiped artists')
+      await payload.delete({
+        collection: 'shows',
+        where: {
+          id: {
+            exists: true,
+          },
+        },
+      })
+      console.log('🧹 Wiped shows')
+      await payload.delete({
+        collection: 'episodes',
+        where: {
+          id: {
+            exists: true,
+          },
+        },
+      })
+      console.log('🧹 Wiped episodes')
+      await payload.delete({
+        collection: 'search',
+        where: {
+          id: {
+            exists: true,
+          },
+        },
+      })
+      console.log('🧹 Wiped search')
+      await payload.delete({
+        collection: 'images',
+        where: {
+          id: {
+            exists: true,
+          },
+        },
+      })
+      console.log('🧹 Wiped images')
+      await payload.delete({
+        collection: 'audio',
+        where: {
+          id: {
+            exists: true,
+          },
+        },
+      })
+      console.log('🧹 Wiped audio')
+      await payload.delete({
+        collection: 'tags',
+        where: {
+          id: {
+            exists: true,
+          },
+        },
+      })
+      console.log('🧹 Wiped tags')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
+await wipeCollections()
+  .then(async () => await seed())
+  .finally(() => process.exit(0))
