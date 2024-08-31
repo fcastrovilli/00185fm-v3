@@ -39,16 +39,24 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
   })
 
   const fieldToUseValue = useFormFields(([fields, dispatch]) => {
-    return (fields[fieldToUse]?.value as string) || ''
+    return fields[fieldToUse].value as string
   })
 
   useEffect(() => {
-    if (checkboxValue) setValue(formatSlug(fieldToUseValue))
-  }, [fieldToUseValue, checkboxValue, setValue])
+    if (checkboxValue) {
+      if (fieldToUseValue) {
+        const formattedSlug = formatSlug(fieldToUseValue)
+
+        if (value !== formattedSlug) setValue(formattedSlug)
+      } else {
+        if (value !== '') setValue('')
+      }
+    }
+  }, [fieldToUseValue, checkboxValue, setValue, value])
 
   const handleLock = useCallback(
-    (event: React.MouseEvent) => {
-      event.preventDefault()
+    (e: React.MouseEvent) => {
+      e.preventDefault()
 
       setCheckboxValue(!checkboxValue)
     },
