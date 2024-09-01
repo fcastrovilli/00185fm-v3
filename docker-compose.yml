@@ -6,6 +6,7 @@ services:
       args:
         DATABASE_URI: ${DATABASE_URI}
         PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+        SEED: ${SEED}
     ports:
       - 3000:3000
     environment:

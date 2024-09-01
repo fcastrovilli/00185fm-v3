@@ -24,8 +24,12 @@ ARG DATABASE_URI
 ARG PAYLOAD_SECRET
 ENV DATABASE_URI=${DATABASE_URI}
 ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
+ARG SEED
+ENV SEED=${SEED}
 
 RUN corepack enable pnpm
+
+RUN if [ "$SEED" = "true" ]; then pnpm run seed; fi
 RUN pnpm run build
 
 # Production image, copy all the files and run next
