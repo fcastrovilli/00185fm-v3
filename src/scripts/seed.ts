@@ -8,9 +8,9 @@ const wipe_db = true
 const payload = await getPayload({ config })
 
 async function seed() {
-  const numberOfArtists = Math.floor(Math.random() * 20) + 10
-  const numberOfShows = Math.floor(Math.random() * 20) + 10
-  const numberOfEpisodes = Math.floor(Math.random() * 100) + 10
+  const numberOfArtists = Math.floor(Math.random() * 100) + 100
+  const numberOfShows = Math.floor(Math.random() * 100) + 100
+  const numberOfEpisodes = Math.floor(Math.random() * 100) + 1000
 
   const artists: Partial<Artist>[] = []
   const shows: Partial<Show>[] = []
@@ -150,15 +150,6 @@ async function wipeCollections() {
         },
       })
       console.log('🧹 Wiped episodes')
-      await payload.delete({
-        collection: 'search',
-        where: {
-          id: {
-            exists: true,
-          },
-        },
-      })
-      console.log('🧹 Wiped search')
       await payload.delete({
         collection: 'images',
         where: {

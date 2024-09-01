@@ -19,6 +19,7 @@ export const Shows: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      index: true,
     },
     {
       label: 'Curated By',
@@ -27,6 +28,7 @@ export const Shows: CollectionConfig = {
       relationTo: 'artists',
       required: true,
       hasMany: true,
+      index: true,
     },
     {
       name: 'description',

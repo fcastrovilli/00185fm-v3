@@ -45,6 +45,7 @@ export const Episodes: CollectionConfig = {
               name: 'title',
               type: 'text',
               required: true,
+              index: true,
             },
             {
               type: 'row',
@@ -56,6 +57,7 @@ export const Episodes: CollectionConfig = {
                   relationTo: 'artists',
                   required: true,
                   hasMany: true,
+                  index: true,
                 },
                 {
                   name: 'show',
@@ -63,6 +65,7 @@ export const Episodes: CollectionConfig = {
                   relationTo: 'shows',
                   required: true,
                   hasMany: false,
+                  index: true,
                 },
               ],
             },
