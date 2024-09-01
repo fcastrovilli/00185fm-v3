@@ -19,6 +19,7 @@ export const Artists: CollectionConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      index: true,
     },
     {
       name: 'bio',

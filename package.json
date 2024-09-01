@@ -25,7 +25,6 @@
     "@payloadcms/live-preview-react": "3.0.0-beta.97",
     "@payloadcms/next": "3.0.0-beta.97",
     "@payloadcms/plugin-cloud": "3.0.0-beta.97",
-    "@payloadcms/plugin-search": "3.0.0-beta.97",
     "@payloadcms/richtext-lexical": "3.0.0-beta.97",
     "@payloadcms/storage-s3": "3.0.0-beta.97",
     "@payloadcms/ui": "3.0.0-beta.97",
