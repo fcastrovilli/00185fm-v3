@@ -15,17 +15,13 @@ type Month =
   | 'dec'
 
 type MonthsGroupedByYear = {
-  dates: [
-    {
-      year: number
-      months: Month[]
-    },
-  ]
+  dates: {
+    year: number
+    months: Month[]
+  }[]
 }
 
 async function getGroupedDates(): Promise<MonthsGroupedByYear> {
-  // Connect to the database if not already connected
-
   // Aggregate by year and month
   const allDates = await payload.db.collections['episodes'].aggregate([
     {
