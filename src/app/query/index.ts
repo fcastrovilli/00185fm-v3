@@ -142,3 +142,13 @@ export const queryEpisodesByShow = cache(async ({ show }: { show: string | null 
 
   return result.docs || []
 })
+
+export const queryTags = cache(async () => {
+  const result = await payload.find({
+    collection: 'tags',
+    depth: 0,
+    pagination: false,
+  })
+
+  return result.docs || []
+})

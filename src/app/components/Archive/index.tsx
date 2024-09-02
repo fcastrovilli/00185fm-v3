@@ -9,6 +9,7 @@ import EpisodeCard from '../Cards/EpisodeCard'
 import Link from 'next/link'
 import { getPaginatedEpisodes } from '@/app/actions'
 import { useInView } from 'react-intersection-observer'
+import { ScrollArea } from '../ui/scroll-area'
 
 type Props = {
   init_episodes: PaginatedDocs<Episode>
@@ -67,8 +68,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
   }, [text, pathname])
 
   return (
-    <div>
-      <h2 className="text-3xl font-semibold">Archive</h2>
+    <ScrollArea>
       {searchEpisodes?.docs?.length === 0 &&
         searchShows?.docs?.length === 0 &&
         searchArtists?.docs?.length === 0 && (
@@ -137,7 +137,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
           </div>
         </div>
       )}
-    </div>
+    </ScrollArea>
   )
 }
 

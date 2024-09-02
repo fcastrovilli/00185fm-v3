@@ -26,6 +26,7 @@ export const Playlists: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     description: 'Manage all the playlists. DO NOT DELETE THE DEFAULT ONE.',
+    defaultColumns: ['title'],
   },
   endpoints: [
     {

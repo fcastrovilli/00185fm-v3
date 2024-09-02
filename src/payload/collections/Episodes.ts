@@ -16,6 +16,7 @@ export const Episodes: CollectionConfig = {
   admin: {
     description: 'Manage all the episodes.',
     useAsTitle: 'title',
+    defaultColumns: ['title', 'curatedBy', 'show', 'publishedAt', 'public', 'tags'],
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({

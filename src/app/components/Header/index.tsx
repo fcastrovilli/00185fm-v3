@@ -10,7 +10,7 @@ export default function Nav() {
           00185fm
         </Link>
       </div>
-      <div className="flex gap-4">
+      <div className="gap-4 hidden sm:flex">
         <Suspense>
           <SearchComponent />
         </Suspense>

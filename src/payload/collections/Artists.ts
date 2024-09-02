@@ -13,6 +13,7 @@ export const Artists: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     description: 'Manage all the curators.',
+    defaultColumns: ['name'],
   },
   fields: [
     {

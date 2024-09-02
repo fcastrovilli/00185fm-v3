@@ -12,6 +12,7 @@ export const Tags: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     description: 'Manage all the tags.',
+    defaultColumns: ['name'],
   },
   fields: [
     {
@@ -19,6 +20,7 @@ export const Tags: CollectionConfig = {
       label: 'Tag',
       type: 'text',
       required: true,
+      unique: true,
     },
   ],
 }

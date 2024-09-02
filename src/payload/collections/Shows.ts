@@ -13,6 +13,7 @@ export const Shows: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     description: 'Manage all the shows.',
+    defaultColumns: ['title', 'curatedBy', 'image'],
   },
   fields: [
     {
