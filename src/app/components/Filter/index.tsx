@@ -3,7 +3,7 @@ import Dates from './Dates'
 
 export default async function Filter() {
   return (
-    <div className="grid h-full grid-cols-2">
+    <div className="grid h-full grid-cols-2 gap-2">
       <Tags />
       <Dates />
     </div>

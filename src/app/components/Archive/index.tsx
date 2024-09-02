@@ -80,7 +80,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       {searchEpisodes && searchEpisodes.docs.length > 0 && (
         <div>
           <h3 className="text-2xl font-semibold">Episodes</h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {searchEpisodes.docs.map((result) => {
               return <EpisodeCard key={result.id} episode={result} />
             })}
@@ -90,7 +90,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       {searchShows && searchShows.docs.length > 0 && (
         <div>
           <h3 className="text-2xl font-semibold">Shows</h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {searchShows.docs.map((result) => {
               return (
                 <div key={result.id}>
@@ -107,7 +107,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       {searchArtists && searchArtists.docs.length > 0 && (
         <div>
           <h3 className="text-2xl font-semibold">Artists</h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {searchArtists.docs.map((result) => {
               return (
                 <div key={result.id}>
@@ -123,7 +123,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       )}
       {episodes && (
         <div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {episodes.map((episode) => (
               <EpisodeCard episode={episode} key={episode.id} />
             ))}

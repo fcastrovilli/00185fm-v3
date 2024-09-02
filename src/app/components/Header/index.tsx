@@ -10,16 +10,16 @@ export default function Nav() {
           00185fm
         </Link>
       </div>
-      <div className="hidden gap-4 sm:flex">
+      <div className="hidden gap-10 sm:flex">
+        <Link scroll={false} href={'/archive'}>
+          /archive
+        </Link>
+        <Link scroll={false} href={'/about'}>
+          /about
+        </Link>
         <Suspense>
           <SearchComponent />
         </Suspense>
-        <Link scroll={false} href={'/archive'}>
-          Archive
-        </Link>
-        <Link scroll={false} href={'/about'}>
-          About
-        </Link>
       </div>
     </nav>
   )

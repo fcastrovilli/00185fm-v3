@@ -11,8 +11,8 @@ export default async function Archive() {
     pageParam: 1,
   })
   return (
-    <div className="grid grid-cols-6 gap-4">
-      <div className="col-span-4 h-full">
+    <div className="container grid grid-cols-5 gap-4 px-24">
+      <div className="col-span-3 h-full">
         <ArchiveComponent init_episodes={episodes} />
       </div>
       <div className="col-span-2">
