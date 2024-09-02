@@ -14,7 +14,7 @@ type Month =
   | 'nov'
   | 'dec'
 
-type MonthsGroupedByYear = {
+export type MonthsGroupedByYear = {
   dates: {
     year: number
     months: Month[]

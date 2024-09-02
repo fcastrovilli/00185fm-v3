@@ -1,9 +1,12 @@
 import Badge from '../../Badge'
-import { getGroupedDates } from './server'
+import { MonthsGroupedByYear } from './server'
 import { ScrollArea, ScrollBar } from '../../ui/scroll-area'
 
-export default async function Dates() {
-  const all_dates = await getGroupedDates()
+type Props = {
+  all_dates: MonthsGroupedByYear
+}
+
+export default async function Dates({ all_dates }: Props) {
   return (
     <ScrollArea>
       <div className="flex flex-row gap-4">
