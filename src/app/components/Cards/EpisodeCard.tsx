@@ -10,7 +10,7 @@ type Props = {
 
 const EpisodeCard = ({ episode }: Props) => {
   return (
-    <div className="bg-slate-300/70 p-4 rounded-lg flex flex-col gap-2 my-2">
+    <div className="my-2 flex flex-col gap-2 rounded-lg bg-slate-300/70 p-4">
       <Link scroll={false} href={`/episodes/${episode.slug}`}>
         Title: {episode.title}
       </Link>

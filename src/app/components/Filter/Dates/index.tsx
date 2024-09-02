@@ -10,7 +10,7 @@ export default async function Dates() {
         {all_dates.dates.reverse().map((date) => {
           return (
             <div key={date.year}>
-              <h3 className="text-2xl w-fit">{date.year}</h3>
+              <h3 className="w-fit text-2xl">{date.year}</h3>
               <div className="flex flex-col gap-2">
                 {date.months.map((month) => (
                   <Badge key={month} text={month} size="sm" />

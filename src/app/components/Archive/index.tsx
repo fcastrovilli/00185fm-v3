@@ -80,7 +80,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       {searchEpisodes && searchEpisodes.docs.length > 0 && (
         <div>
           <h3 className="text-2xl font-semibold">Episodes</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {searchEpisodes.docs.map((result) => {
               return <EpisodeCard key={result.id} episode={result} />
             })}
@@ -90,7 +90,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       {searchShows && searchShows.docs.length > 0 && (
         <div>
           <h3 className="text-2xl font-semibold">Shows</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {searchShows.docs.map((result) => {
               return (
                 <div key={result.id}>
@@ -107,7 +107,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       {searchArtists && searchArtists.docs.length > 0 && (
         <div>
           <h3 className="text-2xl font-semibold">Artists</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {searchArtists.docs.map((result) => {
               return (
                 <div key={result.id}>
@@ -123,12 +123,12 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       )}
       {episodes && (
         <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {episodes.map((episode) => (
               <EpisodeCard episode={episode} key={episode.id} />
             ))}
           </div>
-          <div className="w-full flex justify-center">
+          <div className="flex w-full justify-center">
             {(hasNextPage && (
               <div className="text-2xl" ref={scrollTrigger}>
                 Loading...

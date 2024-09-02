@@ -7,9 +7,9 @@ export default function Badge({ text, size = 'md' }: Props) {
   const className = `text-${size} ${size === 'xs' || size === 'sm' ? 'px-2' : 'px-4'} py-1`
   return (
     <button
-      className={`${className} border border-black border-dotted rounded-full w-fit flex items-center justify-center`}
+      className={`${className} flex w-fit items-center justify-center rounded-full border border-dotted border-black`}
     >
-      <span className="uppercase line-clamp-1">{text}</span>
+      <span className="line-clamp-1 uppercase">{text}</span>
     </button>
   )
 }

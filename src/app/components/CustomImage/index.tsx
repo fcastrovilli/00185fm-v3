@@ -11,7 +11,7 @@ export function CustomImage({ image, alt, size }: Props) {
   if (image) {
     return (
       <Image
-        className="object-cover h-full w-full"
+        className="h-full w-full object-cover"
         priority
         width={image.sizes?.[size]?.width!}
         height={image.sizes?.[size]?.height!}

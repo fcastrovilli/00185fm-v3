@@ -23,9 +23,9 @@ export function Modal({ children }: { children: React.ReactNode }) {
       <dialog
         ref={dialogRef}
         onClose={onDismiss}
-        className="w-[90%] h-[90%] relative rounded-lg p-4"
+        className="relative h-[90%] w-[90%] rounded-lg p-4"
       >
-        <button className="absolute top-4 right-4 text-2xl" onClick={onDismiss}>
+        <button className="absolute right-4 top-4 text-2xl" onClick={onDismiss}>
           ✕
         </button>
         {children}

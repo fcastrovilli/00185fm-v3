@@ -6,7 +6,7 @@ export default async function Tags() {
   const tags = await queryTags()
   return (
     <ScrollArea>
-      <div className="pt-2 flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 pt-2">
         {tags.map((tag) => (
           <Badge key={tag.id} text={tag.name} size="xs" />
         ))}

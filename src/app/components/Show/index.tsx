@@ -43,7 +43,7 @@ export default function ShowComponent({ init_paginated_episodes, show }: Props) 
           <EpisodeCard episode={episode} key={episode.id} />
         ))}
       </div>
-      <div className="w-full flex justify-center">
+      <div className="flex w-full justify-center">
         {(hasNextPage && (
           <div className="text-2xl" ref={scrollTrigger}>
             Loading...
