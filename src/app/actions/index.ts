@@ -8,7 +8,7 @@ export const getPaginatedEpisodes = cache(async ({ pageParam }: { pageParam?: nu
   const { isEnabled: draft } = draftMode()
   const result = await payload.find({
     collection: 'episodes',
-    limit: 16,
+    limit: 15,
     depth: 1,
     draft,
     page: pageParam,
