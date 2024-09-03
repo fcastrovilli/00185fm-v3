@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 
 export default function Nav() {
   return (
-    <nav className="flex h-20 items-center justify-between border-b px-4">
+    <nav className="z-40 flex h-20 items-center justify-between border-b px-4">
       <div className="text-3xl font-semibold">
         <Link scroll={false} href={'/'}>
           00185fm

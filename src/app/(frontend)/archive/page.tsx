@@ -11,11 +11,11 @@ export default async function Archive() {
     pageParam: 1,
   })
   return (
-    <div className="container grid grid-cols-5 gap-4 px-24">
-      <div className="col-span-3 h-full">
+    <div className="container flex flex-col gap-4 sm:grid sm:grid-cols-5 md:px-10 lg:px-24">
+      <div className="order-last col-span-3 sm:order-first sm:h-full">
         <ArchiveComponent init_episodes={episodes} />
       </div>
-      <div className="col-span-2">
+      <div className="order-first col-span-2 h-min sm:order-last sm:h-full">
         <Filter />
       </div>
     </div>
