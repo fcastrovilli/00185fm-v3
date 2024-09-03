@@ -1,29 +1,37 @@
 'use client'
 
-import { Artist, Episode, Show, Image as ImageType } from '@/payload-types'
+import { Episode } from '@/payload-types'
 import Link from 'next/link'
-import { CustomImage } from '../CustomImage'
 
 type Props = {
   episode: Episode
 }
 
+import React from 'react'
+import Hover from './Hover'
+
 const EpisodeCard = ({ episode }: Props) => {
   return (
-    <div className="my-2 flex flex-col gap-2 rounded-lg bg-slate-300/70 p-4">
-      <Link scroll={false} href={`/episodes/${episode.slug}`}>
-        Title: {episode.title}
-      </Link>
-      <Link scroll={false} href={`/shows/${(episode.show as Show).slug}`}>
-        Show: {(episode.show as Show).title}
-      </Link>
-      {(episode.curatedBy as Artist[]).map((artist, i) => (
-        <Link scroll={false} key={`${artist.slug}-${i}`} href={`/artists/${artist.slug}`}>
-          Curated By: {artist.name}
-        </Link>
-      ))}
-      <CustomImage image={episode.image as ImageType} alt={episode.title} size="small" />
-    </div>
+    <Link
+      href={`/episodes/${episode.slug}`}
+      scroll={false}
+      className="group relative w-full max-w-sm overflow-hidden rounded-lg shadow-lg"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`https://picsum.photos/seed/${episode.title}/350`}
+        alt={episode.title}
+        className="w-full transition duration-300 ease-in-out"
+      />
+
+      <div
+        className={`absolute inset-0 h-full w-full opacity-0 transition duration-300 ease-in-out group-hover:opacity-100`}
+      >
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Hover episode={episode} />
+        </div>
+      </div>
+    </Link>
   )
 }
 

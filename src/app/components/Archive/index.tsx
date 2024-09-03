@@ -123,17 +123,18 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       )}
       {episodes && (
         <div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             {episodes.map((episode) => (
               <EpisodeCard episode={episode} key={episode.id} />
             ))}
           </div>
-          <div className="flex w-full justify-center">
+          <div className="flex w-full justify-center pb-16 sm:pb-0">
             {(hasNextPage && (
               <div className="text-2xl" ref={scrollTrigger}>
                 Loading...
               </div>
-            )) || <p className="text-2xl">No more episodes to load</p>}
+            )) ||
+              null}
           </div>
         </div>
       )}

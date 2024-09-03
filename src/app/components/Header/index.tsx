@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { SearchComponent } from '../Search'
+
 import { Suspense } from 'react'
 
 export default function Nav() {
@@ -10,16 +11,18 @@ export default function Nav() {
           00185fm
         </Link>
       </div>
-      <div className="hidden gap-10 sm:flex">
+      <div className="flex gap-10">
         <Link scroll={false} href={'/archive'}>
           /archive
         </Link>
         <Link scroll={false} href={'/about'}>
           /about
         </Link>
-        <Suspense>
-          <SearchComponent />
-        </Suspense>
+        <div className="hidden sm:block">
+          <Suspense>
+            <SearchComponent />
+          </Suspense>
+        </div>
       </div>
     </nav>
   )

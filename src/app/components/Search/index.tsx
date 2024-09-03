@@ -28,7 +28,7 @@ export function SearchComponent() {
       }}
     >
       <input
-        className="border border-black"
+        className="w-full border border-black"
         type="text"
         value={text}
         placeholder="Search..."
