@@ -13,7 +13,7 @@ export default async function Archive() {
     pageParam: 1,
   })
   return (
-    <div className="container flex flex-col gap-4 sm:grid sm:grid-cols-5 md:px-10 lg:px-24">
+    <div className="flex flex-col gap-4 sm:container sm:grid sm:grid-cols-5 md:px-10 lg:px-24">
       <div className="block h-full sm:hidden">
         <Suspense>
           <SearchComponent />

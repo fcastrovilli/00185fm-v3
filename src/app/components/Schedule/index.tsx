@@ -8,16 +8,16 @@ export default function Schedule() {
 
   return (
     <div
-      className={`${isOpen ? 'translate-x-0' : 'translate-x-[80%]'} fixed right-0 top-0 flex h-screen max-w-prose items-center justify-center transition-all duration-700 ease-in-out`}
+      className={`${isOpen ? 'translate-x-0' : 'translate-x-[88%] sm:translate-x-[90%] md:translate-x-[86%] lg:translate-x-[84%]'} fixed right-0 top-0 flex h-screen max-w-prose items-center justify-center transition-all duration-500 ease-in-out`}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`z-30 flex h-full max-h-[450px] cursor-pointer items-center justify-center rounded-bl-xl rounded-tl-xl bg-slate-100/80`}
       >
-        <div className="relative -rotate-90 transform">
+        <div className="relative w-16 -rotate-90 transform md:w-20 lg:w-24">
           <span className="select-none text-2xl">SCHEDULE</span>
         </div>
-        <ScrollArea className="w-prose max-h-[380px] pr-14 text-justify">
+        <ScrollArea className="w-prose max-h-[380px] pr-6 text-justify">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit, iure, voluptatem quasi
           facilis ab dolor reiciendis aliquid repellendus natus quaerat labore molestias alias
           dolore! Adipisci repellat enim nostrum nobis ab? Lorem ipsum dolor sit amet, consectetur

@@ -1,7 +1,7 @@
 import { Audio } from '@/payload-types'
 
 type Props = {
-  audio: Audio
+  audio: Audio | undefined
 }
 
 export function CustomAudio({ audio }: Props) {

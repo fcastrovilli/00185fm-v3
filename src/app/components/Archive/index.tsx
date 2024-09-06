@@ -123,7 +123,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
       )}
       {episodes && (
         <div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
             {episodes.map((episode) => (
               <EpisodeCard episode={episode} key={episode.id} />
             ))}

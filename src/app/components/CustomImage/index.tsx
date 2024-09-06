@@ -1,21 +1,23 @@
 import Image from 'next/image'
 import { Image as ImageType } from '@/payload-types'
+import { cn } from '@/app/lib/utils'
 
 type Props = {
-  image: ImageType
+  image: ImageType | undefined
   size: 'small' | 'big'
   alt: string
+  className?: string
 }
 
-export function CustomImage({ image, alt, size }: Props) {
-  if (image) {
+export function CustomImage({ image, alt, size, className }: Props) {
+  if (typeof image === 'object') {
     return (
       <Image
-        className="h-full w-full object-cover"
+        className={cn(className, 'h-full w-full object-cover')}
         priority
-        width={image.sizes?.[size]?.width!}
-        height={image.sizes?.[size]?.height!}
-        src={image.sizes?.[size]?.url!}
+        width={image.sizes?.[size]?.width || image.width!}
+        height={image.sizes?.[size]?.height || image.height!}
+        src={image.sizes?.[size]?.url || image.url!}
         alt={image.credit || alt}
       />
     )

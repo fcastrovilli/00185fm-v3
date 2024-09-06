@@ -19,8 +19,10 @@ export default function Hover({ episode }: Props) {
         <div className="row-start-3 mx-2 mb-4 flex items-center justify-center rounded-md bg-white/85 text-center text-black shadow-[rgba(255,255,255,0.85)_0px_0px_20px_5px] sm:mb-5 md:mb-6">
           <div>
             <div className="text-xs sm:text-sm lg:text-base">
-              <p className="line-clamp-1 font-semibold uppercase leading-none">{episode.title}</p>
-              <p className="line-clamp-1 leading-none">{(episode.show as Show).title}</p>
+              <p className="mx-2 line-clamp-1 font-semibold uppercase leading-none">
+                {episode.title}
+              </p>
+              <p className="mx-2 line-clamp-1 leading-none">{(episode.show as Show).title}</p>
             </div>
             <p className="line-clamp-1 text-xs uppercase italic leading-tight">
               {(episode.tags as Tag[]).map((tag) => `#${tag.name}`).join(' ')}
