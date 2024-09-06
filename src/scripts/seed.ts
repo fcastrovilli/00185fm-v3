@@ -1,16 +1,26 @@
 import { faker } from '@faker-js/faker'
-import { getPayload } from 'payload'
+import { getPayload, RequiredDataFromCollectionSlug } from 'payload'
 import config from '@payload-config'
-import { Artist, Episode, Show, Tag } from '@/payload-types'
+import { Artist, Episode, Image, Show, Tag } from '@/payload-types'
 import { formatSlug } from '@/payload/fields/slug/formatSlug'
+import https from 'https'
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { IncomingMessage } from 'http'
+import { pipeline } from 'stream'
+import { promisify } from 'util'
 
 const wipe_db = true
 const payload = await getPayload({ config })
+const streamPipeline = promisify(pipeline)
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
 
-const numberOfTags = Math.floor(Math.random() * 100) + 100
-const numberOfArtists = Math.floor(Math.random() * 100) + 100
-const numberOfShows = Math.floor(Math.random() * 100) + 100
-const numberOfEpisodes = Math.floor(Math.random() * 100) + 1000
+const numberOfTags = Math.floor(Math.random() * 100) + 50
+const numberOfArtists = Math.floor(Math.random() * 100) + 50
+const numberOfShows = Math.floor(Math.random() * 100) + 50
+const numberOfEpisodes = Math.floor(Math.random() * 100) + 100
 
 async function seed() {
   const tags: Partial<Tag>[] = []
@@ -23,12 +33,6 @@ async function seed() {
     const raw_tags = await generateFakeTags()
     tags.push(...raw_tags)
 
-    // for (let i = 0; i < numberOfTags; i += 1) {
-    //   const tag = await generateFakeTag()
-    //   if (tag.id) {
-    //     tags.push(tag)
-    //   }
-    // }
     console.log(`🏷️ Generated ${tags.length} tags`)
 
     // Generate artists
@@ -76,15 +80,105 @@ async function seed() {
     }
     console.log(`🩷 Generated ${episodes.length} episodes`)
 
+    await cleanupTmpImages()
     console.log(`🎉 !! Successfully seeded !! 🎉`)
   } catch (error) {
     console.log(error)
   }
 }
 
+async function cleanupTmpImages() {
+  const directory = path.join(dirname, 'tmp_img')
+  fs.rmdirSync(directory, { recursive: true })
+}
+
+async function getFakeImage() {
+  const url = faker.image.urlLoremFlickr({ height: 1000, width: 1000 })
+  const redirectedUrl = `https://loremflickr.com${await getRedirectedUrl(url)}`
+
+  const imagePath = await downloadImage(redirectedUrl)
+
+  const imageData: Omit<Image, 'id' | 'createdAt' | 'updatedAt'> = {
+    credit: faker.person.fullName(),
+  }
+
+  try {
+    const image: Image = await payload.create({
+      collection: 'images',
+      data: imageData,
+      filePath: imagePath, // Pass the local path
+    })
+
+    // Cleanup the local file after creation
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.error(`Failed to delete the file: ${imagePath}`, err)
+      }
+    })
+
+    return image
+  } catch (error) {
+    // If an error occurs during creation, make sure to still clean up the file
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+        console.error(`Failed to delete the file: ${imagePath} after an error`, err)
+      }
+    })
+
+    throw error // Re-throw the error after cleanup
+  }
+}
+
+function getRedirectedUrl(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    https
+      .get(url, (response) => {
+        // Check if it's a redirect
+        if (
+          response.statusCode &&
+          response.statusCode >= 300 &&
+          response.statusCode < 400 &&
+          response.headers.location
+        ) {
+          resolve(response.headers.location) // Return the final redirected URL
+        } else {
+          reject(new Error('No redirect found'))
+        }
+      })
+      .on('error', (err) => {
+        reject(err)
+      })
+  })
+}
+
+async function downloadImage(url: string): Promise<string> {
+  const filePath = path.join(dirname, 'tmp_img', `image-${Date.now()}.jpg`)
+
+  // Ensure the directory exists
+  fs.mkdirSync(path.dirname(filePath), { recursive: true })
+
+  // Download the image and save it to a local path
+  const response = await new Promise<IncomingMessage>((resolve, reject) => {
+    https
+      .get(url, (res) => {
+        if (res.statusCode === 200) {
+          resolve(res)
+        } else {
+          reject(new Error(`Failed to download image. Status code: ${res.statusCode}`))
+        }
+      })
+      .on('error', (err) => reject(err))
+  })
+
+  // Use streamPipeline to save the response data into the file
+  await streamPipeline(response, fs.createWriteStream(filePath))
+
+  return filePath
+}
+
 async function generateFakeTags(): Promise<Partial<Tag>[]> {
   const raw_tags = faker.helpers.uniqueArray(faker.music.genre, numberOfTags)
-  const data = raw_tags.map((tag) => {
+  const data: RequiredDataFromCollectionSlug<'tags'>[] = raw_tags.map((tag) => {
     return {
       name: tag,
     }
@@ -107,7 +201,7 @@ async function generateFakeTags(): Promise<Partial<Tag>[]> {
 
 async function generateFakeArtist(): Promise<Partial<Artist>> {
   const name = faker.person.fullName()
-  const data = {
+  const data: RequiredDataFromCollectionSlug<'artists'> = {
     name: name,
     slug: formatSlug(name),
   }
@@ -126,7 +220,7 @@ async function generateFakeArtist(): Promise<Partial<Artist>> {
 async function generateFakeShow(artists_id: string[]): Promise<Partial<Show>> {
   const title = faker.commerce.productName()
   const slug = formatSlug(title)
-  const data = {
+  const data: RequiredDataFromCollectionSlug<'shows'> = {
     title: title,
     slug: slug,
     curatedBy: artists_id,
@@ -150,13 +244,15 @@ async function generateFakeEpisode(
 ): Promise<Partial<Episode>> {
   const title = faker.commerce.productName()
   const slug = formatSlug(title)
-  const data = {
-    public: true,
+  const _public = Math.random() > 0.3
+  const data: RequiredDataFromCollectionSlug<'episodes'> = {
+    public: _public,
     title: title,
     slug: slug,
     show: show_id,
     curatedBy: artists_id,
     tags: tags_id,
+    image: (await getFakeImage()).id,
     playlists: [1],
     publishedAt: faker.date.past().toISOString(),
   }
