@@ -22,6 +22,9 @@ export default function EpisodeComponent({ episode }: Props) {
           alt={(episode.image as ImageType).credit || episode.title}
           size={'big'}
           className="rounded-lg object-cover"
+          priority={true}
+          quality={80}
+          loading="eager"
         />
         <CustomAudio audio={episode.audio as Audio} />
       </div>
