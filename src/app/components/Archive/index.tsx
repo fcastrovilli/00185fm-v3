@@ -50,78 +50,73 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
   useEffect(() => {
     if (text) {
       getSearchResult({ text: text as string }).then((result) => {
-        setEpisodes(undefined)
+        // setEpisodes(undefined)
         setSearchEpisodes(result.episodes)
         setSearchShows(result.shows)
         setSearchArtists(result.artists)
       })
-    } else {
-      if (pathname === '/archive') {
-        getPaginatedEpisodes({ pageParam: 1 }).then((episodes) => {
-          setEpisodes(episodes.docs)
-          setSearchEpisodes(undefined)
-          setSearchShows(undefined)
-          setSearchArtists(undefined)
-        })
-      }
     }
   }, [text, pathname])
 
   return (
     <ScrollArea>
-      {searchEpisodes?.docs?.length === 0 &&
-        searchShows?.docs?.length === 0 &&
-        searchArtists?.docs?.length === 0 && (
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="text-2xl font-semibold">No results found</h1>
-            <p className="text-xl">Try searching for something else</p>
-          </div>
-        )}
-      {searchEpisodes && searchEpisodes.docs.length > 0 && (
+      {text && (
         <div>
-          <h3 className="text-2xl font-semibold">Episodes</h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {searchEpisodes.docs.map((result) => {
-              return <EpisodeCard key={result.id} episode={result} />
-            })}
-          </div>
+          {searchEpisodes?.docs?.length === 0 &&
+            searchShows?.docs?.length === 0 &&
+            searchArtists?.docs?.length === 0 && (
+              <div className="flex flex-col items-center justify-center">
+                <h1 className="text-2xl font-semibold">No results found</h1>
+                <p className="text-xl">Try searching for something else</p>
+              </div>
+            )}
+          {searchEpisodes && searchEpisodes.docs.length > 0 && (
+            <div className="pb-2">
+              <h3 className="pb-2 text-3xl font-semibold">Episodes</h3>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {searchEpisodes.docs.map((result) => {
+                  return <EpisodeCard key={result.id} episode={result} />
+                })}
+              </div>
+            </div>
+          )}
+          {searchShows && searchShows.docs.length > 0 && (
+            <div className="pb-2">
+              <h3 className="pb-2 text-3xl font-semibold">Shows</h3>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {searchShows.docs.map((result) => {
+                  return (
+                    <div key={result.id}>
+                      <h3 className="text-2xl">{result.title}</h3>
+                      <Link scroll={false} href={`/shows/${result.slug}`}>
+                        Go to show
+                      </Link>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+          {searchArtists && searchArtists.docs.length > 0 && (
+            <div className="pb-2">
+              <h3 className="pb-2 text-3xl font-semibold">Artists</h3>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {searchArtists.docs.map((result) => {
+                  return (
+                    <div key={result.id}>
+                      <h3 className="text-2xl">{result.name}</h3>
+                      <Link scroll={false} href={`/artists/${result.slug}`}>
+                        Go to artist
+                      </Link>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
-      {searchShows && searchShows.docs.length > 0 && (
-        <div>
-          <h3 className="text-2xl font-semibold">Shows</h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {searchShows.docs.map((result) => {
-              return (
-                <div key={result.id}>
-                  <h3 className="text-2xl">{result.title}</h3>
-                  <Link scroll={false} href={`/shows/${result.slug}`}>
-                    Go to show
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
-      {searchArtists && searchArtists.docs.length > 0 && (
-        <div>
-          <h3 className="text-2xl font-semibold">Artists</h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-            {searchArtists.docs.map((result) => {
-              return (
-                <div key={result.id}>
-                  <h3 className="text-2xl">{result.name}</h3>
-                  <Link scroll={false} href={`/artists/${result.slug}`}>
-                    Go to artist
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
-      {episodes && (
+      {!text && episodes && (
         <div>
           <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
             {episodes.map((episode) => (
@@ -130,7 +125,7 @@ const ArchiveComponent = ({ init_episodes }: Props) => {
           </div>
           <div className="flex w-full justify-center pb-16 sm:pb-0">
             {(hasNextPage && (
-              <div className="text-2xl" ref={scrollTrigger}>
+              <div className="py-4 text-3xl" ref={scrollTrigger}>
                 Loading...
               </div>
             )) ||
