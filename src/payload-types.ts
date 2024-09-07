@@ -186,6 +186,7 @@ export interface Show {
 export interface Image {
   id: string;
   credit?: string | null;
+  blurHash?: string | null;
   prefix?: string | null;
   updatedAt: string;
   createdAt: string;

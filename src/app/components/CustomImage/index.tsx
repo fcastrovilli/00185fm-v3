@@ -7,9 +7,10 @@ type Props = {
   size: 'small' | 'big'
   alt: string
   className?: string
+  quality?: number
 }
 
-export function CustomImage({ image, alt, size, className }: Props) {
+export function CustomImage({ image, alt, size, className, quality = 65 }: Props) {
   if (typeof image === 'object') {
     return (
       <Image
@@ -19,6 +20,9 @@ export function CustomImage({ image, alt, size, className }: Props) {
         height={image.sizes?.[size]?.height || image.height!}
         src={image.sizes?.[size]?.url || image.url!}
         alt={image.credit || alt}
+        quality={quality}
+        placeholder="blur"
+        blurDataURL={image.blurHash!}
       />
     )
   }

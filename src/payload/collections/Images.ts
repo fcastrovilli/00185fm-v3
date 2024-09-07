@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor } from '../access/checks'
+import { generateBlurHash } from '../hooks/blurHash'
 
 export const Images: CollectionConfig = {
   slug: 'images',
@@ -37,10 +38,20 @@ export const Images: CollectionConfig = {
     formatOptions: { format: 'webp' },
     adminThumbnail: 'small',
   },
+  hooks: {
+    beforeValidate: [generateBlurHash],
+  },
   fields: [
     {
       name: 'credit',
       type: 'text',
+    },
+    {
+      name: 'blurHash',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
     },
   ],
 }
