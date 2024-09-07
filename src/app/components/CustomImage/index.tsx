@@ -14,7 +14,7 @@ export function CustomImage({ image, alt, size, className, quality = 65 }: Props
   if (typeof image === 'object') {
     return (
       <Image
-        className={cn(className, 'h-full w-full object-cover')}
+        className={cn(className, 'h-full w-full object-cover transition-all duration-500 ease-in')}
         priority
         width={image.sizes?.[size]?.width || image.width!}
         height={image.sizes?.[size]?.height || image.height!}
