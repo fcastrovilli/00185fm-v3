@@ -13,12 +13,7 @@ export const getPaginatedEpisodes = cache(async ({ pageParam }: { pageParam?: nu
     draft,
     page: pageParam,
     pagination: true,
-    overrideAccess: true,
-    where: {
-      public: {
-        equals: true,
-      },
-    },
+    overrideAccess: draft,
   })
   return result
 })
@@ -37,23 +32,14 @@ export const getPaginatedEpisodesByShow = cache(
       collection: 'episodes',
       limit: 5,
       draft,
-      overrideAccess: true,
+      overrideAccess: draft,
       pagination: true,
       page: pageParam,
       depth: 1,
       where: {
-        and: [
-          {
-            'show.slug': {
-              equals: show_slug,
-            },
-          },
-          {
-            public: {
-              equals: true,
-            },
-          },
-        ],
+        'show.slug': {
+          equals: show_slug,
+        },
       },
     })
 
@@ -72,20 +58,11 @@ export const getPaginatedEpisodesByArtist = cache(
       page: pageParam,
       pagination: true,
       draft,
-      overrideAccess: true,
+      overrideAccess: draft,
       where: {
-        and: [
-          {
-            curatedBy: {
-              equals: artistId,
-            },
-          },
-          {
-            public: {
-              equals: true,
-            },
-          },
-        ],
+        curatedBy: {
+          equals: artistId,
+        },
       },
     })
 

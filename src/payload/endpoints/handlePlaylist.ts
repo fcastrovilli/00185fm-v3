@@ -45,11 +45,7 @@ const playlistHandler: PayloadHandler = async (req: PayloadRequest) => {
             equals: playlist.id,
           },
         },
-        {
-          public: {
-            equals: true,
-          },
-        },
+        { _status: { equals: 'published' } },
       ],
     },
   })

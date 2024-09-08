@@ -14,7 +14,7 @@ export const getSearchResult = cache(async ({ text }: { text: string }) => {
     limit: 12,
     depth: 1,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     where: {
       or: [
         {
@@ -35,7 +35,7 @@ export const getSearchResult = cache(async ({ text }: { text: string }) => {
     limit: 12,
     depth: 1,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     where: {
       or: [
         {
@@ -56,7 +56,7 @@ export const getSearchResult = cache(async ({ text }: { text: string }) => {
     limit: 12,
     depth: 1,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     where: {
       or: [
         {

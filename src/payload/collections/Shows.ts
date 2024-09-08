@@ -1,19 +1,36 @@
 import type { CollectionConfig } from 'payload'
-import { isAdminOrEditor } from '../access/checks'
+import { authenticatedOrPublished, isAdminOrEditor } from '../access/checks'
 import { slugField } from '../fields/slug'
+import { versionsField } from '../fields/versions'
+import { generatePreviewPath } from '../utils/generatePreviewPath'
+import { revalidateShow } from '../hooks/revalidateShow'
 
 export const Shows: CollectionConfig = {
   slug: 'shows',
   access: {
-    read: isAdminOrEditor,
+    read: authenticatedOrPublished,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
   },
+  ...versionsField(),
   admin: {
     useAsTitle: 'title',
     description: 'Manage all the shows.',
-    defaultColumns: ['title', 'curatedBy', 'image'],
+    defaultColumns: ['title', 'curatedBy', '_status', 'image'],
+    livePreview: {
+      url: ({ data }) => {
+        const path = generatePreviewPath({
+          path: `/shows/${typeof data?.slug === 'string' ? data.slug : ''}`,
+        })
+        return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
+      },
+    },
+    preview: (doc) =>
+      generatePreviewPath({ path: `/shows/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+  },
+  hooks: {
+    afterChange: [revalidateShow],
   },
   fields: [
     {

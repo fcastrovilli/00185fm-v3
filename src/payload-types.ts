@@ -96,6 +96,7 @@ export interface Artist {
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -141,7 +142,6 @@ export interface Episode {
   } | null;
   audio?: (string | null) | Audio;
   image?: (string | null) | Image;
-  public?: boolean | null;
   defaultPlaylist?: boolean | null;
   playlists?: (number | Playlist)[] | null;
   tags?: (string | Tag)[] | null;
@@ -149,6 +149,7 @@ export interface Episode {
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -178,6 +179,7 @@ export interface Show {
   slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

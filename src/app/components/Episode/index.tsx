@@ -9,7 +9,7 @@ type Props = {
 
 export default function EpisodeComponent({ episode }: Props) {
   return (
-    <div className="m-4 grid grid-cols-1 gap-4 overflow-y-scroll md:grid-cols-2">
+    <div className="m-4 grid h-full grid-cols-1 gap-4 overflow-y-scroll md:grid-cols-2">
       <div>
         <h1 className="text-3xl font-semibold">{episode.title}</h1>
         <h2>{(episode.curatedBy as Artist[]).map((artist) => artist.name).join(', ')}</h2>

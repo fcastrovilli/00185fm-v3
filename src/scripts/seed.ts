@@ -33,7 +33,7 @@ async function seed() {
     const raw_tags = await generateFakeTags()
     tags.push(...raw_tags)
 
-    console.log(`🏷️ Generated ${tags.length} tags`)
+    payload.logger.info(`🏷️  Generated ${tags.length} tags`)
 
     // Generate artists
     for (let i = 0; i < numberOfArtists; i += 1) {
@@ -42,7 +42,7 @@ async function seed() {
         artists.push(artist)
       }
     }
-    console.log(`👶 Generated ${artists.length} artists`)
+    payload.logger.info(`🧜‍♀️ Generated ${artists.length} artists`)
 
     // Generate shows
     for (let i = 0; i < numberOfShows; i += 1) {
@@ -55,7 +55,7 @@ async function seed() {
         shows.push(show)
       }
     }
-    console.log(`🎬 Generated ${shows.length} shows`)
+    payload.logger.info(`🎬 Generated ${shows.length} shows`)
 
     // Generate episodes
     for (let i = 0; i < numberOfEpisodes; i += 1) {
@@ -78,12 +78,12 @@ async function seed() {
         episodes.push(episode)
       }
     }
-    console.log(`🩷 Generated ${episodes.length} episodes`)
+    payload.logger.info(`🩷 Generated ${episodes.length} episodes`)
 
     await cleanupTmpImages()
-    console.log(`🎉 !! Successfully seeded !! 🎉`)
+    payload.logger.info(`🎉 !! Successfully seeded !! 🎉`)
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -92,9 +92,9 @@ async function cleanupTmpImages() {
   fs.rmdirSync(directory, { recursive: true })
 }
 
-async function getFakeImage() {
-  const url = faker.image.urlLoremFlickr({ height: 1000, width: 1000 })
-  const redirectedUrl = `https://loremflickr.com${await getRedirectedUrl(url)}`
+async function getFakeImage(title: string) {
+  const url = `https://picsum.photos/seed/${title}/1000/1000`
+  const redirectedUrl = `${await getRedirectedUrl(url)}`
 
   const imagePath = await downloadImage(redirectedUrl)
 
@@ -194,7 +194,7 @@ async function generateFakeTags(): Promise<Partial<Tag>[]> {
       )
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return tags
 }
@@ -202,6 +202,7 @@ async function generateFakeTags(): Promise<Partial<Tag>[]> {
 async function generateFakeArtist(): Promise<Partial<Artist>> {
   const name = faker.person.fullName()
   const data: RequiredDataFromCollectionSlug<'artists'> = {
+    _status: 'published',
     name: name,
     slug: formatSlug(name),
   }
@@ -212,7 +213,7 @@ async function generateFakeArtist(): Promise<Partial<Artist>> {
       data: data,
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return artist
 }
@@ -221,6 +222,7 @@ async function generateFakeShow(artists_id: string[]): Promise<Partial<Show>> {
   const title = faker.commerce.productName()
   const slug = formatSlug(title)
   const data: RequiredDataFromCollectionSlug<'shows'> = {
+    _status: 'published',
     title: title,
     slug: slug,
     curatedBy: artists_id,
@@ -232,7 +234,7 @@ async function generateFakeShow(artists_id: string[]): Promise<Partial<Show>> {
       data: data,
     })
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return show
 }
@@ -244,15 +246,15 @@ async function generateFakeEpisode(
 ): Promise<Partial<Episode>> {
   const title = faker.commerce.productName()
   const slug = formatSlug(title)
-  const _public = Math.random() > 0.3
+  const status = Math.random() > 0.3 ? 'draft' : 'published'
   const data: RequiredDataFromCollectionSlug<'episodes'> = {
-    public: _public,
+    _status: status,
     title: title,
     slug: slug,
     show: show_id,
     curatedBy: artists_id,
     tags: tags_id,
-    image: (await getFakeImage()).id,
+    image: (await getFakeImage(title)).id,
     playlists: [1],
     publishedAt: faker.date.past().toISOString(),
   }
@@ -263,8 +265,9 @@ async function generateFakeEpisode(
       collection: 'episodes',
       data: data,
     })
+    payload.logger.info(`✨ Created episode: "${episode.title}"`)
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 
   return episode
@@ -281,7 +284,7 @@ async function wipeCollections() {
           },
         },
       })
-      console.log('🧹 Wiped artists')
+      payload.logger.info('🧹 Wiped artists')
       await payload.delete({
         collection: 'shows',
         where: {
@@ -290,7 +293,7 @@ async function wipeCollections() {
           },
         },
       })
-      console.log('🧹 Wiped shows')
+      payload.logger.info('🧹 Wiped shows')
       await payload.delete({
         collection: 'episodes',
         where: {
@@ -299,7 +302,7 @@ async function wipeCollections() {
           },
         },
       })
-      console.log('🧹 Wiped episodes')
+      payload.logger.info('🧹 Wiped episodes')
       await payload.delete({
         collection: 'images',
         where: {
@@ -308,7 +311,7 @@ async function wipeCollections() {
           },
         },
       })
-      console.log('🧹 Wiped images')
+      payload.logger.info('🧹 Wiped images')
       await payload.delete({
         collection: 'audio',
         where: {
@@ -317,7 +320,7 @@ async function wipeCollections() {
           },
         },
       })
-      console.log('🧹 Wiped audio')
+      payload.logger.info('🧹 Wiped audio')
       await payload.delete({
         collection: 'tags',
         where: {
@@ -326,9 +329,9 @@ async function wipeCollections() {
           },
         },
       })
-      console.log('🧹 Wiped tags')
+      payload.logger.info('🧹 Wiped tags')
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 }

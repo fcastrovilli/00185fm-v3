@@ -31,7 +31,7 @@ export function CustomImage({
       <Image
         className={cn(
           className,
-          `h-full w-full object-cover duration-500 ease-in-out ${isLoaded ? 'blur-0' : 'blur-lg'}`,
+          `h-full w-full object-cover duration-500 ease-in-out ${isLoaded ? 'blur-0' : 'blur-sm'}`,
         )}
         priority={priority}
         width={image.sizes?.[size]?.width || image.width!}
@@ -42,7 +42,7 @@ export function CustomImage({
         placeholder="blur"
         blurDataURL={image.blurHash!}
         loading={loading}
-        onLoadingComplete={() => setIsLoaded(true)}
+        onLoad={() => setIsLoaded(true)}
       />
     )
   }

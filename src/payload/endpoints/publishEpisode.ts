@@ -22,15 +22,10 @@ const publishEpisode: PayloadHandler = async (req: PayloadRequest) => {
             less_than: end,
           },
         },
-        {
-          public: {
-            equals: false,
-          },
-        },
       ],
     },
     data: {
-      public: true,
+      _status: 'published',
       defaultPlaylist: true,
     },
   })

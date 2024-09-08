@@ -15,13 +15,21 @@ import Nav from '../components/Header'
 import Footer from '../components/Footer'
 import { LivePreviewListener } from '../components/LivePreviewListener'
 import Schedule from '../components/Schedule'
+import { AdminBar } from '../components/AdminBar'
+import { draftMode } from 'next/headers'
 
 export default function RootLayout({ children, modal }: LayoutProps) {
+  const { isEnabled } = draftMode()
   return (
     <html lang="en">
       <body>
         {modal}
         <div id="modal-root"></div>
+        <AdminBar
+          adminBarProps={{
+            preview: isEnabled,
+          }}
+        />
         <LivePreviewListener />
         <div className="grid h-screen grid-rows-[auto,1fr,auto]">
           <Nav />

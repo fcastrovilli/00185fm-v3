@@ -13,11 +13,6 @@ export async function generateStaticParams() {
     collection: 'episodes',
     draft: false,
     limit: 1000,
-    where: {
-      public: {
-        equals: true,
-      },
-    },
   })
 
   return episodes.docs?.map(({ slug }) => slug)

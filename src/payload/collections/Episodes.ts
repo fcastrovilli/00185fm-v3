@@ -1,14 +1,16 @@
 import type { CollectionConfig } from 'payload'
-import { isAdminOrEditor } from '../access/checks'
+import { authenticatedOrPublished, isAdminOrEditor } from '../access/checks'
 import { Episode } from '@/payload-types'
 import publishEpisode from '../endpoints/publishEpisode'
 import { generatePreviewPath } from '../utils/generatePreviewPath'
 import { slugField } from '../fields/slug'
+import { versionsField } from '../fields/versions'
+import { revalidateEpisode } from '../hooks/revalidateEpisode'
 
 export const Episodes: CollectionConfig = {
   slug: 'episodes',
   access: {
-    read: isAdminOrEditor,
+    read: authenticatedOrPublished,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
@@ -16,7 +18,7 @@ export const Episodes: CollectionConfig = {
   admin: {
     description: 'Manage all the episodes.',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'curatedBy', 'show', 'publishedAt', 'public', 'tags'],
+    defaultColumns: ['title', 'curatedBy', 'show', '_status', 'publishedAt', 'tags'],
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
@@ -28,6 +30,7 @@ export const Episodes: CollectionConfig = {
     preview: (doc) =>
       generatePreviewPath({ path: `/episodes/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
   },
+  ...versionsField(),
   endpoints: [
     {
       method: 'post',
@@ -35,6 +38,9 @@ export const Episodes: CollectionConfig = {
       handler: publishEpisode,
     },
   ],
+  hooks: {
+    afterChange: [revalidateEpisode],
+  },
   fields: [
     {
       type: 'tabs',
@@ -117,32 +123,6 @@ export const Episodes: CollectionConfig = {
           ],
         },
       ],
-    },
-    {
-      name: 'public',
-      type: 'checkbox',
-      label: 'Public',
-      defaultValue: false,
-      admin: {
-        position: 'sidebar',
-        description: 'Should this episode be public?',
-      },
-      hooks: {
-        beforeChange: [
-          async ({ siblingData }: { siblingData: Partial<Episode> }) => {
-            const now = new Date()
-            const today = now.setHours(0, 0, 0, 0)
-            if (siblingData.public && !siblingData.publishedAt) {
-              siblingData.public = false
-            } else if (
-              siblingData.publishedAt &&
-              new Date(siblingData.publishedAt).getTime() > today
-            ) {
-              siblingData.public = false
-            }
-          },
-        ],
-      },
     },
     {
       name: 'defaultPlaylist',

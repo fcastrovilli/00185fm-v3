@@ -11,12 +11,7 @@ export const queryPaginatedEpisodes = cache(async ({ pageParam = 1 }: { pagePara
     draft,
     page: pageParam,
     pagination: true,
-    overrideAccess: true,
-    where: {
-      public: {
-        equals: true,
-      },
-    },
+    overrideAccess: draft,
   })
   return result
 })
@@ -29,20 +24,11 @@ export const queryEpisodeBySlug = cache(async ({ slug }: { slug: string | null |
     limit: 1,
     depth: 1,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     where: {
-      and: [
-        {
-          slug: {
-            equals: slug,
-          },
-        },
-        {
-          public: {
-            equals: true,
-          },
-        },
-      ],
+      slug: {
+        equals: slug,
+      },
     },
   })
 
@@ -57,7 +43,7 @@ export const queryArtistBySlug = cache(async ({ slug }: { slug: string | null | 
     limit: 1,
     depth: 1,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     where: {
       slug: {
         equals: slug,
@@ -76,20 +62,11 @@ export const queryEpisodesByArtist = cache(async ({ artist: artistId }: { artist
     limit: 12,
     depth: 1,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     where: {
-      and: [
-        {
-          curatedBy: {
-            equals: artistId,
-          },
-        },
-        {
-          public: {
-            equals: true,
-          },
-        },
-      ],
+      curatedBy: {
+        equals: artistId,
+      },
     },
   })
 
@@ -103,7 +80,7 @@ export const queryShowBySlug = cache(async ({ slug }: { slug: string | null | un
     collection: 'shows',
     limit: 1,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     depth: 1,
     where: {
       slug: {
@@ -122,21 +99,12 @@ export const queryEpisodesByShow = cache(async ({ show }: { show: string | null 
     collection: 'episodes',
     limit: 12,
     draft,
-    overrideAccess: true,
+    overrideAccess: draft,
     depth: 1,
     where: {
-      and: [
-        {
-          'show.slug': {
-            equals: show,
-          },
-        },
-        {
-          public: {
-            equals: true,
-          },
-        },
-      ],
+      'show.slug': {
+        equals: show,
+      },
     },
   })
 

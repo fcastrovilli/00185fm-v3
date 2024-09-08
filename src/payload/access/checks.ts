@@ -31,3 +31,14 @@ export const isAdminOrSelf: Access<any> = ({ req: { user } }) => {
     },
   }
 }
+
+export const authenticatedOrPublished: Access = ({ req: { user } }) => {
+  if (user?.roles.includes('admin')) return true
+  if (user?.roles.includes('editor')) return true
+
+  return {
+    _status: {
+      equals: 'published',
+    },
+  }
+}
