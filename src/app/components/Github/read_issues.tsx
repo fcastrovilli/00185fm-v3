@@ -1,4 +1,4 @@
-import { getIssues } from './issues'
+import { getIssues } from './actions'
 import {
   Card,
   CardContent,
@@ -7,10 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/ui/card'
+
+import { Pill } from '@/app/components/ui/pill'
+
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import Markdown from 'markdown-to-jsx'
 
-async function GitHubIssues() {
+async function GitHubReadIssues() {
   const issues = await getIssues()
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -20,8 +23,10 @@ async function GitHubIssues() {
           className="rounded-[var(--style-radius-m)] bg-[var(--theme-elevation-50)] outline outline-1 outline-[var(--theme-border-color)]"
         >
           <CardHeader>
-            <CardTitle>{issue.title}</CardTitle>
-            <CardDescription className="flex flex-row gap-1">
+            <CardTitle>
+              <span className="text-gray-500">#{issue.number}</span> {issue.title}
+            </CardTitle>
+            <CardDescription className="flex flex-row items-center justify-start gap-1">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={issue.user?.avatar_url}
@@ -31,8 +36,15 @@ async function GitHubIssues() {
                 className="rounded-full"
               />
               <span className="text-sm text-gray-500">{issue.user?.login}</span>
-              {' • '}
-              {issue.state === 'open' ? 'Open ✅' : 'Closed 🎯'}
+              {issue.labels.length > 0 && ' • '}
+              {issue.labels.map((label) => {
+                if (typeof label !== 'string')
+                  return (
+                    <Pill key={label.id} className={`bg-[#${label.color}]`}>
+                      {label.name}
+                    </Pill>
+                  )
+              })}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -55,4 +67,4 @@ async function GitHubIssues() {
   )
 }
 
-export default GitHubIssues
+export default GitHubReadIssues
