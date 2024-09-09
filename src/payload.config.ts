@@ -36,6 +36,10 @@ export default buildConfig({
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   admin: {
+    components: {
+      beforeDashboard: ['@/app/components/BeforeDashboard'],
+      afterDashboard: ['@/app/components/AfterDashboard'],
+    },
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
