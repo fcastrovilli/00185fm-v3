@@ -6,7 +6,7 @@ import { randomInt } from 'crypto'
 export const Playlists: CollectionConfig = {
   slug: 'playlists',
   access: {
-    read: isAdminOrEditor,
+    read: () => true,
     create: isAdminOrEditor,
     update: ({ data, req }) => {
       if (data?.title === 'default') {

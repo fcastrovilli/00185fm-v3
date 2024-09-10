@@ -4,7 +4,7 @@ import { isAdminOrEditor } from '../access/checks'
 export const Tags: CollectionConfig = {
   slug: 'tags',
   access: {
-    read: isAdminOrEditor,
+    read: () => true,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
